@@ -1,0 +1,32 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content">
+    <TextView
+        android:id="@android:id/title"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:text="Fresh"
+        android:textColor="#fff6fff7"
+        android:textSize="20dp"/>
+
+    <Button
+        android:id="@+id/main_add_button"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="10dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="right"
+        android:background="@drawable/mainaddbutton"
+        android:clickable="true"
+        android:onClick="moveToAddItem"/>
+
+    <Button
+        android:id="@+id/main_filter_button"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="1dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_gravity="left"
+        android:background="@drawable/mainfilterbutton"/>
+</FrameLayout>

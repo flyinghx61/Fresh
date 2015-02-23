@@ -1,0 +1,374 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    tools:context=".AddItemActivity"
+    android:background="#fff6fff7"
+    android:clickable="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_weight="1"
+        android:background="#ffaaff56"
+        android:layout_alignParentTop="false"
+        android:id="@+id/RefriOrFreezer">
+
+        <Button
+            android:background="@drawable/buttonstylegreen"
+            android:layout_width="180dp"
+            android:layout_height="30dp"
+            android:text="Refrigerator"
+            android:id="@+id/button"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginBottom="10dp"
+            android:textColor="#ffffffff"
+            android:textAllCaps="false"
+            android:clickable="true"
+            android:layout_alignParentTop="false"
+            android:layout_marginTop="10dp"/>
+        <Button
+            android:background="@drawable/buttonstylegreen"
+            android:layout_width="180dp"
+            android:layout_height="30dp"
+            android:text="Freezer"
+            android:id="@+id/button2"
+            android:layout_toEndOf="@+id/button"
+            android:layout_toRightOf="@+id/button"
+            android:textColor="#ffffffff"
+            android:textAllCaps="false"
+            android:clickable="true"
+            android:layout_marginTop="10dp" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="40dp"
+        android:layout_marginTop="50dp"
+        android:background="#3a210404"
+        android:id="@+id/Date">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:layout_centerVertical="true"
+            android:layout_centerHorizontal="true"
+            android:textColor="#ff151515"
+            android:textSize="20dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_marginTop="160dp"
+        android:id="@+id/Addfrom">
+
+        <RelativeLayout
+            android:id="@+id/red_rectan"
+            android:layout_width="fill_parent"
+            android:layout_height="80dp"
+            android:layout_marginTop="0dp"
+            android:background="#FFFF4457">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Add From"
+                android:id="@+id/textView3"
+                android:textColor="#ffffffff"
+                android:textSize="18dp"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp" />
+
+        </RelativeLayout>
+
+        <TabHost
+            android:layout_width="fill_parent"
+            android:layout_height="400dp"
+            android:id="@+id/tabHost2"
+            android:layout_marginTop="30dp">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
+
+                <TabWidget
+                    android:id="@android:id/tabs"
+                    android:layout_width="fill_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/buttonstylered"></TabWidget>
+
+                <FrameLayout
+                    android:id="@android:id/tabcontent"
+                    android:layout_width="fill_parent"
+                    android:layout_height="350dp">
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout"
+                        android:layout_width="fill_parent"
+                        android:layout_height="350dp"
+                        android:orientation="vertical">
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/linearLayout2"
+                        android:layout_width="fill_parent"
+                        android:layout_height="330dp"
+                        android:orientation="vertical">
+
+                        <TabHost
+                            android:layout_width="fill_parent"
+                            android:layout_height="350dp"
+                            android:id="@+id/tabHost"
+                            android:layout_marginTop="5dp"
+                            android:layout_alignTop="@+id/red_rectan">
+
+                            <LinearLayout
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:orientation="vertical">
+
+                                <TabWidget
+                                    android:id="@android:id/tabs"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="33dp"
+                                    android:background="@drawable/buttonstyletab"
+                                    android:layout_marginLeft="2dp"
+                                    android:layout_marginRight="2dp"
+                                    android:clipToPadding="false"
+                                    android:textAlignment="viewStart"
+                                    android:layout_marginTop="5dp"></TabWidget>
+
+                                <FrameLayout
+                                    android:id="@android:id/tabcontent"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="330dp"
+                                    android:layout_marginTop="10dp">
+
+                                    <GridLayout
+                                        android:id="@+id/tab1"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="fill_parent"
+                                        android:orientation="vertical"
+                                        android:columnCount="4"
+                                        android:rowCount="4">
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/milk"
+                                            android:layout_row="0"
+                                            android:layout_column="0"
+                                            android:src="@drawable/apple"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/imageButton"
+                                            android:layout_row="0"
+                                            android:layout_column="1"
+                                            android:src="@drawable/milk"
+                                            android:layout_marginLeft="16dp" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/imageButton2"
+                                            android:layout_row="0"
+                                            android:layout_column="2"
+                                            android:src="@drawable/milk"
+                                            android:layout_marginLeft="16dp" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/imageButton3"
+                                            android:layout_row="0"
+                                            android:layout_column="3"
+                                            android:src="@drawable/milk"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginRight="0dp" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/imageButton4"
+                                            android:layout_row="1"
+                                            android:layout_column="0"
+                                            android:src="@drawable/milk"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginTop="5dp" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/imageButton5"
+                                            android:layout_row="1"
+                                            android:layout_column="1"
+                                            android:src="@drawable/milk"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginTop="5dp" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/imageButton6"
+                                            android:layout_row="1"
+                                            android:layout_column="2"
+                                            android:src="@drawable/milk"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="16dp" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/imageButton7"
+                                            android:layout_row="1"
+                                            android:layout_column="3"
+                                            android:src="@drawable/milk"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginRight="0dp"
+                                            android:layout_marginLeft="16dp" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/imageButton8"
+                                            android:layout_row="2"
+                                            android:layout_column="0"
+                                            android:src="@drawable/milk"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginRight="0dp" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/imageButton9"
+                                            android:layout_row="2"
+                                            android:layout_column="1"
+                                            android:src="@drawable/milk"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginTop="5dp" />
+
+                                        <ImageButton
+                                            android:layout_width="50dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/imageButton10"
+                                            android:layout_row="2"
+                                            android:layout_column="1"
+                                            android:src="@drawable/milk"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginTop="5dp" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/imageButton11"
+                                            android:layout_row="2"
+                                            android:layout_column="2"
+                                            android:src="@drawable/milk"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginTop="5dp" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/imageButton12"
+                                            android:layout_row="2"
+                                            android:layout_column="3"
+                                            android:src="@drawable/milk"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginTop="5dp" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/imageButton13"
+                                            android:layout_row="3"
+                                            android:layout_column="0"
+                                            android:src="@drawable/milk"
+                                            android:layout_marginLeft="15dp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginRight="0dp" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/imageButton14"
+                                            android:layout_row="3"
+                                            android:layout_column="1"
+                                            android:src="@drawable/milk"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginTop="5dp" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/imageButton15"
+                                            android:layout_row="3"
+                                            android:layout_column="2"
+                                            android:src="@drawable/milk"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginTop="5dp" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/imageButton16"
+                                            android:layout_row="3"
+                                            android:layout_column="3"
+                                            android:src="@drawable/milk"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginTop="5dp" />
+                                    </GridLayout>
+
+                                    <GridLayout
+                                        android:id="@+id/tab2"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="fill_parent"
+                                        android:orientation="vertical"></GridLayout>
+
+                                    <GridLayout
+                                    android:id="@+id/tab3"
+                                    android:layout_width="fill_parent"
+                                    android:layout_height="fill_parent"
+                                    android:orientation="vertical"></GridLayout>
+
+                                    <GridLayout
+                                        android:id="@+id/tab4"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="350dp"
+                                        android:orientation="vertical"></GridLayout>
+
+                                    <GridLayout
+                                        android:id="@+id/tab5"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="fill_parent"
+                                        android:orientation="vertical"></GridLayout>
+
+                                    <GridLayout
+                                        android:id="@+id/tab6"
+                                        android:layout_width="fill_parent"
+                                        android:layout_height="fill_parent"
+                                        android:orientation="vertical"></GridLayout>
+                                </FrameLayout>
+                            </LinearLayout>
+                        </TabHost>
+                    </LinearLayout>
+
+                </FrameLayout>
+            </LinearLayout>
+        </TabHost>
+    </RelativeLayout>
+
+</RelativeLayout>
