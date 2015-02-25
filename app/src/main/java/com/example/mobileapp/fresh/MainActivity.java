@@ -6,6 +6,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -13,11 +14,23 @@ import android.view.View;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
 import android.widget.TabHost;
+import android.widget.TextView;
+
+import com.parse.FindCallback;
+import com.parse.GetCallback;
+import com.parse.Parse;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
 
 import java.lang.reflect.Field;
+import java.sql.Array;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
-
+import java.util.List;
+import java.util.Objects;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -26,6 +39,36 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        TextView textView2 = (TextView) findViewById(R.id.textView2);
+        textView2.setText(getTime());
+
+        TextView textView3 = (TextView) findViewById(R.id.textView3);
+        textView3.setText(getTime());
+
+
+        /*Parse.enableLocalDatastore(this);
+        Parse.initialize(this, "TOjzpOCEukqSVUCK86fp7hs0Rk75IkkPxmttt1Tl", "j5w4OL8ZHHAyv0GAF8ItkN8hkOalm8XyOZRVh4hf");
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Default");
+        query.whereEqualTo("type", "apple");
+        query.findInBackground(new FindCallback<ParseObject>() {
+            @Override
+            public void done(List<ParseObject> parseObjects, com.parse.ParseException e) {
+                if (e == null) {
+                   for(int i=0;i<parseObjects.size();i++){
+                       String id=parseObjects.get(i).getObjectId();
+                       Log.d("score", "Retrieved " + id + " scores");
+                   }
+
+                } else {
+                    Log.d("score", "Error: " + e.getMessage());
+                }
+            }
+        });*/
+
+       // String score = defaultObj.getString("type");
+      //  Log.d("score", "Retrieved " + score + " scores");
 
         android.support.v7.app.ActionBar.LayoutParams lp =new android.support.v7.app.ActionBar.LayoutParams( ActionBar.LayoutParams.MATCH_PARENT,
            ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
@@ -41,9 +84,8 @@ public class MainActivity extends ActionBarActivity {
         actionBar.setBackgroundDrawable(colorDrawable);
         //actionBar.setTitle("                             Fresh");
 
-        int[] icon = { R.drawable.zheng,R.drawable.zheng,R.drawable.zheng,
-                R.drawable.green3,R.drawable.zheng,R.drawable.zheng,R.drawable.zheng,R.drawable.zheng,R.drawable.zheng
-                ,R.drawable.zheng,R.drawable.zheng,R.drawable.zheng,R.drawable.zheng,R.drawable.mainaddbutton};
+        int[] icon = { R.drawable.apple,R.drawable.bellpepper,R.drawable.bread,
+                R.drawable.broccoli,R.drawable.beans,R.drawable.pear,R.drawable.pumpkin,R.drawable.mushroom,R.drawable.celery, R.drawable.broccoli,R.drawable.eggs,R.drawable.carrot,R.drawable.cauliflower,R.drawable.pear};
         GridView gridView=(GridView)this.findViewById(R.id.gridView);
         ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
         for(int i=0;i<icon.length;i++){
@@ -83,5 +125,11 @@ public class MainActivity extends ActionBarActivity {
     public void moveToAddItem(View view){
         Intent intent=new Intent(this, AddItemActivity.class);
         startActivity(intent);
+    }
+
+    public String getTime() {
+        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
+        String t = format.format(new Date());
+        return t;
     }
 }

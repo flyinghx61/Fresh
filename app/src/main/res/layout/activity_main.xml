@@ -46,20 +46,20 @@
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:layout_marginTop="50dp"
-        android:background="#ffff1d22"
+        android:background="#feecefff"
         android:id="@+id/Date">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Mostly Added:"
             android:id="@+id/textView2"
-            android:textColor="#ffffffff"
+            android:textColor="#ff262626"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="10dp"
-            android:textSize="18dp" />
+            android:layout_marginLeft="130dp"
+            android:textSize="18dp"
+            android:gravity="center" />
 
     </RelativeLayout>
 
@@ -67,43 +67,19 @@
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:layout_marginTop="325dp"
-        android:background="#ffff1d22">
+        android:background="#feecefff">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Categories:"
             android:id="@+id/textView3"
             android:layout_centerVertical="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_marginLeft="10dp"
-            android:textColor="#ffffffff"
+            android:layout_marginLeft="130dp"
+            android:textColor="#ff262626"
             android:textSize="18dp" />
     </RelativeLayout>
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:id="@+id/Line1"
-        android:background="#61202020"
-        android:layout_below="@+id/Date"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="75dp"
-        android:password="false" />
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:id="@+id/Line2"
-        android:layout_centerVertical="true"
-        android:layout_alignParentLeft="false"
-        android:layout_alignParentStart="true"
-        android:background="#61202020"
-        android:layout_marginTop="250dp"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentBottom="false" />
 
     <TextView
         android:layout_width="fill_parent"
@@ -125,17 +101,20 @@
         android:autoText="true" />
 
    <GridView
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_height="230dp"
         android:id="@+id/gridView"
         android:layout_below="@+id/Date"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:horizontalSpacing="20dp"
+        android:horizontalSpacing="0dp"
         android:verticalSpacing="6dp"
-        android:numColumns="6"
+        android:numColumns="4"
         android:nestedScrollingEnabled="false"
         android:columnWidth="100dp"
-        android:fastScrollAlwaysVisible="true" />
+        android:fastScrollAlwaysVisible="false"
+       android:clickable="false"
+       android:stretchMode="spacingWidth"
+       android:clipToPadding="false" />
 
 </RelativeLayout>
