@@ -16,11 +16,11 @@ import android.widget.SimpleAdapter;
 import android.widget.TabHost;
 import android.widget.TextView;
 
-import com.parse.FindCallback;
-import com.parse.GetCallback;
-import com.parse.Parse;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
+//import com.parse.FindCallback;
+//import com.parse.GetCallback;
+//import com.parse.Parse;
+//import com.parse.ParseObject;
+//import com.parse.ParseQuery;
 
 import java.lang.reflect.Field;
 import java.sql.Array;
