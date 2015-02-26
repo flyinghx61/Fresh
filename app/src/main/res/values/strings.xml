@@ -7,4 +7,10 @@
     <string name="button_refrigerator">Refrigerator</string>
     <string name="title_activity_add_item">AddItemActivity</string>
 
+
+    <string-array name="filter_array">
+        <item>Date added</item>
+        <item>Expire date</item>
+        <item>Categories</item>
+    </string-array>
 </resources>
