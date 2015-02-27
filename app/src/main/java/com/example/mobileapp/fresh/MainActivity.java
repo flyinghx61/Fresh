@@ -11,16 +11,14 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
+import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TextView;
-
-import com.parse.FindCallback;
-import com.parse.GetCallback;
-import com.parse.Parse;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
+import android.widget.Toast;
 
 import java.lang.reflect.Field;
 import java.sql.Array;
@@ -84,7 +82,43 @@ public class MainActivity extends ActionBarActivity {
         actionBar.setBackgroundDrawable(colorDrawable);
         //actionBar.setTitle("                             Fresh");
 
-       int[] icon = { R.drawable.apple,R.drawable.bellpepper,R.drawable.bread,
+        Spinner filterSpinner = (Spinner) findViewById(R.id.main_filter_spinner);
+
+        ArrayAdapter<CharSequence> filterAdapter = ArrayAdapter.createFromResource(
+                this, R.array.filter_array, R.layout.customized_spinner_item);
+        filterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        filterSpinner.setAdapter(filterAdapter);
+        filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String msg;
+                if (position == 0) {
+                    msg = "Items filtered by date added";
+                    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    System.out.println("item filtered by date added.");
+                } else if (position == 1) {
+                    msg = "Items filtered by expire date";
+                    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    System.out.println("item filtered by expire date.");
+                } else if (position == 2) {
+                    msg = "Items filtered by categories";
+                    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
+                    System.out.println("item filtered by categories.");
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+
+
+
+
+
+        int[] icon = { R.drawable.apple,R.drawable.bellpepper,R.drawable.bread,
                 R.drawable.broccoli,R.drawable.beans,R.drawable.pear,R.drawable.pumpkin,R.drawable.mushroom,R.drawable.celery, R.drawable.broccoli,R.drawable.eggs,R.drawable.carrot,R.drawable.cauliflower,R.drawable.pear};
         GridView gridView=(GridView)this.findViewById(R.id.gridView);
         ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();

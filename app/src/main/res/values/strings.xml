@@ -18,8 +18,14 @@
     <string name="Mushroom">Mushroom</string>
     <string name="Chillies">Chillies</string>
     <string name="Cabbage">Cabbage</string>
-    <string name="Bellpepper">Cucumber</string>
+    <string name="Bellpepper">Bellpepper</string>
     <string name="Celery">Celery</string>
     <string name="Cawliflower">Cawliflower</string>
     <string name="Pumpkin">Pumpkin</string>
+
+    <string-array name="filter_array">
+        <item>Date added</item>
+        <item>Expire date</item>
+        <item>Categories</item>
+    </string-array>
 </resources>
