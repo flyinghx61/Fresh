@@ -88,13 +88,15 @@ public class MainActivity extends ActionBarActivity {
         actionBar.setBackgroundDrawable(colorDrawable);
         //actionBar.setTitle("                             Fresh");
 
+
+
+        //added by KJ about the spinner
         Spinner filterSpinner = (Spinner) findViewById(R.id.main_filter_spinner);
 
         ArrayAdapter<CharSequence> filterAdapter = ArrayAdapter.createFromResource(
                 this, R.array.filter_array, R.layout.customized_spinner_item);
         filterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         filterSpinner.setAdapter(filterAdapter);
-
         filterSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -138,6 +140,7 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
+        //end of KJ work
 
 
 
