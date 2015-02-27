@@ -20,12 +20,6 @@ import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
-//import com.parse.FindCallback;
-//import com.parse.GetCallback;
-//import com.parse.Parse;
-//import com.parse.ParseObject;
-//import com.parse.ParseQuery;
-
 import java.lang.reflect.Field;
 import java.sql.Array;
 import java.text.ParseException;
@@ -91,9 +85,6 @@ public class MainActivity extends ActionBarActivity {
         actionBar.setBackgroundDrawable(colorDrawable);
         //actionBar.setTitle("                             Fresh");
 
-
-
-        //added by KJ about the spinner
         Spinner filterSpinner = (Spinner) findViewById(R.id.main_filter_spinner);
         ArrayAdapter<CharSequence> filterAdapter = ArrayAdapter.createFromResource(
                 this, R.array.filter_array, R.layout.customized_spinner_item);
@@ -103,25 +94,6 @@ public class MainActivity extends ActionBarActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String msg;
-//                switch(position) {
-//                    case 0: {
-//                        msg = "Items filtered by date added";
-//                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
-//                        System.out.println("item filtered by date added.");
-//                    }
-//                    case 1: {
-//                        msg = "Items filtered by expire date.";
-//                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
-//                        System.out.println("item filtered by expire date.");
-//                    }
-//
-//                    case 2: {
-//                        msg = "Items filtered by categories";
-//                        Toast.makeText(MainActivity.this, msg, Toast.LENGTH_LONG).show();
-//                        System.out.println("item filtered by categories.");
-//                    }
-//                }
-
                 if (position == 0) {
                     msg = "Items filtered by date added";
                     Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
@@ -142,7 +114,7 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
-        //end of KJ work
+
 
 
 
@@ -164,12 +136,12 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_main, menu);
-//        return true;
-//    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {

@@ -6,7 +6,22 @@
     <string name="action_settings">Settings</string>
     <string name="button_refrigerator">Refrigerator</string>
     <string name="title_activity_add_item">AddItemActivity</string>
-
+    <string name="Broccoli">Broccoli</string>
+    <string name="Carrot">Carrot</string>
+    <string name="Tomato">Tomato</string>
+    <string name="Cucumber">Cucumber</string>
+    <string name="Potatoes">Potatoes</string>
+    <string name="Onion">Onion</string>
+    <string name="Lettuce">Lettuce</string>
+    <string name="Beans">Beans</string>
+    <string name="Corn">Corn</string>
+    <string name="Mushroom">Mushroom</string>
+    <string name="Chillies">Chillies</string>
+    <string name="Cabbage">Cabbage</string>
+    <string name="Bellpepper">Bellpepper</string>
+    <string name="Celery">Celery</string>
+    <string name="Cawliflower">Cawliflower</string>
+    <string name="Pumpkin">Pumpkin</string>
 
     <string-array name="filter_array">
         <item>Date added</item>
