@@ -1,17 +1,18 @@
 package com.example.mobileapp.fresh;
 
 import android.app.ActionBar;
-import android.app.ActivityManager;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.media.Image;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridLayout;
 import android.widget.ImageButton;
@@ -21,12 +22,8 @@ import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
-import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
-import static com.example.mobileapp.fresh.R.id.linearLayout2;
-import static com.example.mobileapp.fresh.R.id.tabHost;
 
 
 public class AddItemActivity extends ActionBarActivity {
@@ -104,6 +101,44 @@ public class AddItemActivity extends ActionBarActivity {
         }
     }
 
+    public void addTwoTab(){
+        TabHost tabHost = (TabHost) findViewById(R.id.tabHost2);
+        tabHost.setup();
+        tabHost.addTab(tabHost.newTabSpec("linearLayout").setIndicator("Mostly Added")
+                .setContent(R.id.linearLayout));
+
+        tabHost.addTab(tabHost.newTabSpec("linearLayout2").setIndicator("Categories")
+                .setContent(R.id.linearLayout2));
+        TabWidget tabWidget = tabHost.getTabWidget();
+        for (int i = 0; i < tabWidget.getChildCount(); i++) {
+            TextView tv = (TextView) tabWidget.getChildAt(i).findViewById(android.R.id.title);
+            tv.setAllCaps(false);
+            tv.setGravity(Gravity.CENTER);
+            tv.setTextSize(17);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            lp.setMargins(0, 20, 0, 1);
+            tv.setLayoutParams(lp);
+            tv.setWidth(200);
+            tv.setSingleLine();
+            tv.setTextColor(Color.WHITE);
+        }
+
+        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+            @Override
+            public void onTabChanged(String tabId) {
+                if(tabId.equals("linearLayout2")){
+                    category_onClick();
+                }
+                if(tabId.equals("linearLayout")){
+                    RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.red_rectan);
+                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) relativeLayout.getLayoutParams();
+                    layoutParams.height = 180;
+                    relativeLayout.setLayoutParams(layoutParams);
+                }
+            }
+        });
+    }
+
     public void adjust_red_layout() {
         RelativeLayout relativeLayout = (RelativeLayout) this.findViewById(R.id.red_rectan);
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) relativeLayout.getLayoutParams();
@@ -146,48 +181,25 @@ public class AddItemActivity extends ActionBarActivity {
         }
     }
 
-    public void createVeg(){
-       // ImageButton imageButton=(ImageButton)findViewById(R.id.imageButton);
-      //  imageButton.setBackground(getResources().getDrawable(R.drawable.zheng));
-        //gridLayout.addView(imageView);
+    public void add_item_to_grid(View view) {
+        show_dialog(view);
+        ImageButton imageButton=(ImageButton)view;
+        ImageButton new_imageButton=new ImageButton(this);
+        new_imageButton.setImageDrawable(imageButton.getDrawable());
+        GridLayout gridLayout=(GridLayout)this.findViewById(R.id.AlreadyAdd);
+        gridLayout.addView(new_imageButton);
     }
 
-    public void addTwoTab(){
-        TabHost tabHost = (TabHost) findViewById(R.id.tabHost2);
-        tabHost.setup();
-        tabHost.addTab(tabHost.newTabSpec("linearLayout").setIndicator("Mostly Added")
-                .setContent(R.id.linearLayout));
-
-        tabHost.addTab(tabHost.newTabSpec("linearLayout2").setIndicator("Categories")
-                .setContent(R.id.linearLayout2));
-        TabWidget tabWidget = tabHost.getTabWidget();
-        for (int i = 0; i < tabWidget.getChildCount(); i++) {
-            TextView tv = (TextView) tabWidget.getChildAt(i).findViewById(android.R.id.title);
-            tv.setAllCaps(false);
-            tv.setGravity(Gravity.CENTER);
-            tv.setTextSize(17);
-            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.FILL_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-            lp.setMargins(0, 20, 0, 1);
-            tv.setLayoutParams(lp);
-            tv.setWidth(200);
-            tv.setSingleLine();
-            tv.setTextColor(Color.WHITE);
-        }
-
-        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
-            @Override
-            public void onTabChanged(String tabId) {
-                if(tabId.equals("linearLayout2")){
-                    category_onClick();
-                }
-                if(tabId.equals("linearLayout")){
-                    RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.red_rectan);
-                    RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) relativeLayout.getLayoutParams();
-                    layoutParams.height = 180;
-                    relativeLayout.setLayoutParams(layoutParams);
-                }
-            }
-        });
+    public void show_dialog(View view){
+        String str = String.valueOf(view.getTag());
+        LayoutInflater inflater = getLayoutInflater();
+        View layout = inflater.inflate(R.layout.food_information_layout,(ViewGroup) findViewById(R.id.foodInformation));
+        AlertDialog alertDialog=new AlertDialog.Builder(AddItemActivity.this)
+                .setTitle("Food Information").setView(layout).setPositiveButton("Confirm", null)
+                .setNegativeButton("Cancel", null).show();
+        TextView textView=(TextView)alertDialog.findViewById(R.id.foodName);
+        textView.setText(str);
     }
+
 }
 

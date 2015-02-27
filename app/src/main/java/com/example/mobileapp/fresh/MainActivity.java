@@ -84,7 +84,7 @@ public class MainActivity extends ActionBarActivity {
         actionBar.setBackgroundDrawable(colorDrawable);
         //actionBar.setTitle("                             Fresh");
 
-        int[] icon = { R.drawable.apple,R.drawable.bellpepper,R.drawable.bread,
+       int[] icon = { R.drawable.apple,R.drawable.bellpepper,R.drawable.bread,
                 R.drawable.broccoli,R.drawable.beans,R.drawable.pear,R.drawable.pumpkin,R.drawable.mushroom,R.drawable.celery, R.drawable.broccoli,R.drawable.eggs,R.drawable.carrot,R.drawable.cauliflower,R.drawable.pear};
         GridView gridView=(GridView)this.findViewById(R.id.gridView);
         ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
