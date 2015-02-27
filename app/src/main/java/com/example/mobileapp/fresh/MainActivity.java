@@ -41,6 +41,9 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        //for test if git works
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -92,7 +95,6 @@ public class MainActivity extends ActionBarActivity {
 
         //added by KJ about the spinner
         Spinner filterSpinner = (Spinner) findViewById(R.id.main_filter_spinner);
-
         ArrayAdapter<CharSequence> filterAdapter = ArrayAdapter.createFromResource(
                 this, R.array.filter_array, R.layout.customized_spinner_item);
         filterAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
