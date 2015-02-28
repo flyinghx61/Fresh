@@ -2,6 +2,7 @@ package com.example.mobileapp.fresh;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -184,8 +185,24 @@ public class AddItemActivity extends ActionBarActivity {
     public void add_item_to_grid(View view) {
         show_dialog(view);
         ImageButton imageButton=(ImageButton)view;
-        ImageButton new_imageButton=new ImageButton(this);
+        final ImageButton new_imageButton=new ImageButton(this);
         new_imageButton.setImageDrawable(imageButton.getDrawable());
+        new_imageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                LayoutInflater inflater = getLayoutInflater();
+                View layout = inflater.inflate(R.layout.food_information_layout, (ViewGroup) findViewById(R.id.foodInformation));
+               new AlertDialog.Builder(AddItemActivity.this)
+                        .setTitle("Food Information").setView(layout).setPositiveButton("Confirm", null)
+                        .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                GridLayout gridLayout=(GridLayout)findViewById(R.id.AlreadyAdd);
+                                gridLayout.removeView(new_imageButton);
+                            }
+                        }).show();
+            }
+        });
         GridLayout gridLayout=(GridLayout)this.findViewById(R.id.AlreadyAdd);
         gridLayout.addView(new_imageButton);
     }
