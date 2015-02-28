@@ -186,13 +186,14 @@ public class AddItemActivity extends ActionBarActivity {
         show_dialog(view);
         ImageButton imageButton=(ImageButton)view;
         final ImageButton new_imageButton=new ImageButton(this);
+        new_imageButton.setTag(view.getTag());
         new_imageButton.setImageDrawable(imageButton.getDrawable());
         new_imageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 LayoutInflater inflater = getLayoutInflater();
                 View layout = inflater.inflate(R.layout.food_information_layout, (ViewGroup) findViewById(R.id.foodInformation));
-               new AlertDialog.Builder(AddItemActivity.this)
+                AlertDialog alertDialog=new AlertDialog.Builder(AddItemActivity.this)
                         .setTitle("Food Information").setView(layout).setPositiveButton("Confirm", null)
                         .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                             @Override
@@ -201,6 +202,8 @@ public class AddItemActivity extends ActionBarActivity {
                                 gridLayout.removeView(new_imageButton);
                             }
                         }).show();
+                TextView textView=(TextView)alertDialog.findViewById(R.id.foodName);
+                textView.setText((String)new_imageButton.getTag());
             }
         });
         GridLayout gridLayout=(GridLayout)this.findViewById(R.id.AlreadyAdd);
