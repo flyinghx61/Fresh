@@ -39,6 +39,8 @@ import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class AddItemActivity extends ActionBarActivity {
@@ -236,39 +238,43 @@ public class AddItemActivity extends ActionBarActivity {
         textView.setText(str);
     }
 
-    public void confirm(View view) {
+    public void confirm(View view) throws JSONException {
         GridLayout gridLayout = (GridLayout) findViewById(R.id.AlreadyAdd);
         int childCount=gridLayout.getChildCount();
         for(int i=0;i<childCount;i++){
             ImageButton imageButton=(ImageButton)gridLayout.getChildAt(i);
             String tag=(String)imageButton.getTag();
-            int id=imageButton.getId();
+
+            int identifier = getResources().getIdentifier(tag, "drawable","com.example.mobileapp.fresh");
+            String iden=String.valueOf(identifier);
+
+            String date=this.getTime();
+            sendPostMessage(tag,iden,date);
         }
+
 
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
 
-
+    public void sendPostMessage(final String tag, final String iden, final String date) throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://52.10.237.82:8080/api/food";
 
-        JsonArrayRequest jsObjRequest = new JsonArrayRequest
-                (url,new Response.Listener<JSONArray>() {
+        JSONObject obj = new JSONObject();
+        obj.put("foodname", tag);
+        obj.put("add_time", date);
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.POST, url,obj, new Response.Listener<JSONObject>() {
                     @Override
-                    public void onResponse(JSONArray response) {
-                        try {
-                            JSONObject jsonObject=(JSONObject)response.get(0);
-                            String foodname=jsonObject.getString("foodname");
-                            Log.d("Name:", foodname);
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                    public void onResponse(JSONObject response) {
+                        Log.d("Message: " ,"1");
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Message:", error.getMessage());
+                        Log.d("Message: ", error.getMessage());
                     }
                 });
         queue.add(jsObjRequest);

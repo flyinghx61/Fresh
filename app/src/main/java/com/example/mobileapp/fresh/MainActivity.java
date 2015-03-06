@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -25,9 +26,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Field;
@@ -124,29 +128,14 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
-        RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://52.10.237.82:8080/api/food";
-
-        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-                    @Override
-                    public void onResponse(JSONObject response) {
-
-                    }
-                }, new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Log.d("Message:", error.getMessage());
-                    }
-                });
-        queue.add(jsObjRequest);
+     //   getDatabaseResponse();
 
 
-     /*   ImageButton imageButton1=(ImageButton)new AddItemActivity().findViewById(R.id.beans);
+        int identifier = getResources().getIdentifier("Beans", "drawable","com.example.mobileapp.fresh");
         ImageButton imageButton2=(ImageButton)this.findViewById(R.id.imageButton);
-        imageButton2.setImageDrawable(imageButton1.getDrawable());*/
-     /*   int[] icon = { R.drawable.apple,R.drawable.bellpepper,R.drawable.bread,
-                R.drawable.broccoli,R.drawable.beans,R.drawable.pear,R.drawable.pumpkin,R.drawable.mushroom,R.drawable.celery, R.drawable.broccoli,R.drawable.eggs,R.drawable.carrot,R.drawable.cauliflower,R.drawable.pear};
+        imageButton2.setImageResource(identifier);
+     /*   int[] icon = { R.drawable.apple,R.drawable.Bellpepper,R.drawable.bread,
+                R.drawable.Broccoli,R.drawable.Beans,R.drawable.pear,R.drawable.Pumpkin,R.drawable.Mushroom,R.drawable.Celery, R.drawable.Broccoli,R.drawable.eggs,R.drawable.Carrot,R.drawable.Cauliflower,R.drawable.pear};
         GridView gridView=(GridView)this.findViewById(R.id.gridView);
         ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
         for(int i=0;i<icon.length;i++){
@@ -192,5 +181,30 @@ public class MainActivity extends ActionBarActivity {
         SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
         String t = format.format(new Date());
         return t;
+    }
+
+    public void getDatabaseResponse(){
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://52.10.237.82:8080/api/food";
+
+        JsonArrayRequest jsObjRequest = new JsonArrayRequest
+                (url,new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            JSONObject jsonObject=(JSONObject)response.get(0);
+                            String foodname=jsonObject.getString("foodname");
+                            Log.d("Name:", foodname);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                    }
+                });
+        queue.add(jsObjRequest);
     }
 }
