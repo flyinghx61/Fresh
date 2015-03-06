@@ -100,21 +100,23 @@
         android:layout_marginTop="505dp"
         android:autoText="true" />
 
-   <GridView
+    <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="230dp"
-        android:id="@+id/gridView"
-        android:layout_below="@+id/Date"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:horizontalSpacing="0dp"
-        android:verticalSpacing="6dp"
-        android:numColumns="4"
-        android:nestedScrollingEnabled="false"
-        android:columnWidth="100dp"
-        android:fastScrollAlwaysVisible="false"
-       android:clickable="false"
-       android:stretchMode="spacingWidth"
-       android:clipToPadding="false" />
+        android:layout_height="240dp"
+        android:id="@+id/scrollView2"
+        android:layout_alignTop="@+id/Date"
+        android:layout_marginTop="40dp" >
+
+        <GridLayout
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent"
+            android:columnCount="4">
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton" />
+        </GridLayout>
+    </ScrollView>
 
 </RelativeLayout>

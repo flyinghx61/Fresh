@@ -2,12 +2,14 @@ package com.example.mobileapp.fresh;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.app.DownloadManager;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -22,6 +24,18 @@ import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -204,6 +218,7 @@ public class AddItemActivity extends ActionBarActivity {
                         }).show();
                 TextView textView=(TextView)alertDialog.findViewById(R.id.foodName);
                 textView.setText((String)new_imageButton.getTag());
+
             }
         });
         GridLayout gridLayout=(GridLayout)this.findViewById(R.id.AlreadyAdd);
@@ -221,5 +236,42 @@ public class AddItemActivity extends ActionBarActivity {
         textView.setText(str);
     }
 
+    public void confirm(View view) {
+        GridLayout gridLayout = (GridLayout) findViewById(R.id.AlreadyAdd);
+        int childCount=gridLayout.getChildCount();
+        for(int i=0;i<childCount;i++){
+            ImageButton imageButton=(ImageButton)gridLayout.getChildAt(i);
+            String tag=(String)imageButton.getTag();
+            int id=imageButton.getId();
+        }
+
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+
+
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://52.10.237.82:8080/api/food";
+
+        JsonArrayRequest jsObjRequest = new JsonArrayRequest
+                (url,new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            JSONObject jsonObject=(JSONObject)response.get(0);
+                            String foodname=jsonObject.getString("foodname");
+                            Log.d("Name:", foodname);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Message:", error.getMessage());
+                    }
+                });
+        queue.add(jsObjRequest);
+    }
 }
 

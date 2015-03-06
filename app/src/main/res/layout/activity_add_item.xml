@@ -248,7 +248,7 @@
                                             android:id="@+id/beans"
                                             android:layout_row="1"
                                             android:layout_column="3"
-                                            android:src="@drawable/beans"
+                                            android:background="@drawable/beans"
                                             android:tag="@string/Beans"
                                             android:layout_marginTop="5dp"
                                             android:layout_marginRight="0dp"

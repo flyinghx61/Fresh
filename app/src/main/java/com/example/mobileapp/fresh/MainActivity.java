@@ -14,11 +14,21 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONObject;
 
 import java.lang.reflect.Field;
 import java.sql.Array;
@@ -35,6 +45,7 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        getIntent();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -113,12 +124,28 @@ public class MainActivity extends ActionBarActivity {
             }
         });
 
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://52.10.237.82:8080/api/food";
+
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Message:", error.getMessage());
+                    }
+                });
+        queue.add(jsObjRequest);
 
 
-
-
-
-        int[] icon = { R.drawable.apple,R.drawable.bellpepper,R.drawable.bread,
+     /*   ImageButton imageButton1=(ImageButton)new AddItemActivity().findViewById(R.id.beans);
+        ImageButton imageButton2=(ImageButton)this.findViewById(R.id.imageButton);
+        imageButton2.setImageDrawable(imageButton1.getDrawable());*/
+     /*   int[] icon = { R.drawable.apple,R.drawable.bellpepper,R.drawable.bread,
                 R.drawable.broccoli,R.drawable.beans,R.drawable.pear,R.drawable.pumpkin,R.drawable.mushroom,R.drawable.celery, R.drawable.broccoli,R.drawable.eggs,R.drawable.carrot,R.drawable.cauliflower,R.drawable.pear};
         GridView gridView=(GridView)this.findViewById(R.id.gridView);
         ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
@@ -130,7 +157,7 @@ public class MainActivity extends ActionBarActivity {
 
         SimpleAdapter adapter = new SimpleAdapter(this, lstImageItem,R.layout.sample_image_view,
                                          new String[] {"ItemImage"}, new int[]{R.id.imageView});
-        gridView.setAdapter(adapter);
+        gridView.setAdapter(adapter);*/
     }
 
 
