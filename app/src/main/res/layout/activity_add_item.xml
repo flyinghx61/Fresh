@@ -197,7 +197,7 @@
                                         <ImageButton
                                             android:layout_width="70dp"
                                             android:layout_height="60dp"
-                                            android:id="@+id/Cucumber"
+                                            android:id="@+id/cucumber"
                                             android:layout_row="0"
                                             android:layout_column="3"
                                             android:src="@drawable/cucumber"
@@ -332,10 +332,10 @@
                                         <ImageButton
                                             android:layout_width="70dp"
                                             android:layout_height="60dp"
-                                            android:id="@+id/cawliflower"
+                                            android:id="@+id/cauliflower"
                                             android:layout_row="3"
                                             android:layout_column="2"
-                                            android:src="@drawable/cawliflower"
+                                            android:src="@drawable/cauliflower"
                                             android:tag="@string/cawliflower"
                                             android:layout_marginLeft="16dp"
                                             android:layout_marginTop="5dp"
