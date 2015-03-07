@@ -18,7 +18,8 @@
         android:layout_height="40dp"
         android:layout_gravity="right"
         android:background="@drawable/confirmbutton"
-        android:clickable="true"/>
+        android:clickable="true"
+        android:onClick="confirm"/>
 
     <Button
         android:id="@+id/main_return_button"

@@ -4,13 +4,14 @@ import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,12 @@ import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
 
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONException;
+
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -127,11 +134,11 @@ public class AddItemActivity extends ActionBarActivity {
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
             @Override
             public void onTabChanged(String tabId) {
-                if(tabId.equals("linearLayout2")){
+                if (tabId.equals("linearLayout2")) {
                     category_onClick();
                 }
-                if(tabId.equals("linearLayout")){
-                    RelativeLayout relativeLayout = (RelativeLayout)findViewById(R.id.red_rectan);
+                if (tabId.equals("linearLayout")) {
+                    RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.red_rectan);
                     RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) relativeLayout.getLayoutParams();
                     layoutParams.height = 180;
                     relativeLayout.setLayoutParams(layoutParams);
@@ -182,7 +189,7 @@ public class AddItemActivity extends ActionBarActivity {
         }
     }
 
-    public void add_item_to_grid(View view) {
+    public void add_item_to_grid(final View view) {
         show_dialog(view);
         ImageButton imageButton=(ImageButton)view;
         final ImageButton new_imageButton=new ImageButton(this);
@@ -192,18 +199,30 @@ public class AddItemActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
                 LayoutInflater inflater = getLayoutInflater();
-                View layout = inflater.inflate(R.layout.food_information_layout, (ViewGroup) findViewById(R.id.foodInformation));
+                final View layout = inflater.inflate(R.layout.food_information_layout, (ViewGroup) findViewById(R.id.foodInformation));
                 AlertDialog alertDialog=new AlertDialog.Builder(AddItemActivity.this)
-                        .setTitle("Food Information").setView(layout).setPositiveButton("Confirm", null)
+                        .setTitle("Food Information").setView(layout).setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                TextView textView2=(TextView)layout.findViewById(R.id.qualityPeriod);
+                                String quality_period=textView2.getText().toString();
+                                qualityPeriodToDB((String)view.getTag(),quality_period);
+                            }
+                        })
                         .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                GridLayout gridLayout=(GridLayout)findViewById(R.id.AlreadyAdd);
+                                GridLayout gridLayout = (GridLayout) findViewById(R.id.AlreadyAdd);
                                 gridLayout.removeView(new_imageButton);
                             }
                         }).show();
                 TextView textView=(TextView)alertDialog.findViewById(R.id.foodName);
                 textView.setText((String)new_imageButton.getTag());
+
+                TextView textView2=(TextView)alertDialog.findViewById(R.id.qualityPeriod);
+                String quality_period= qualityPeriodFromDB((String)view.getTag());
+                textView2.setText(quality_period);
+
             }
         });
         GridLayout gridLayout=(GridLayout)this.findViewById(R.id.AlreadyAdd);
@@ -211,15 +230,104 @@ public class AddItemActivity extends ActionBarActivity {
     }
 
     public void show_dialog(View view){
-        String str = String.valueOf(view.getTag());
+        // show the name of food in AlertDialog
+        final String tag = String.valueOf(view.getTag());
         LayoutInflater inflater = getLayoutInflater();
-        View layout = inflater.inflate(R.layout.food_information_layout,(ViewGroup) findViewById(R.id.foodInformation));
-        AlertDialog alertDialog=new AlertDialog.Builder(AddItemActivity.this)
-                .setTitle("Food Information").setView(layout).setPositiveButton("Confirm", null)
+        final View layout = inflater.inflate(R.layout.food_information_layout,(ViewGroup) findViewById(R.id.foodInformation));
+        final AlertDialog alertDialog=new AlertDialog.Builder(AddItemActivity.this)
+                .setTitle("Food Information").setView(layout).setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        TextView textView2=(TextView)layout.findViewById(R.id.qualityPeriod);
+                        String quality_period=textView2.getText().toString();
+                        qualityPeriodToDB(tag,quality_period);
+                    }
+                })
                 .setNegativeButton("Cancel", null).show();
         TextView textView=(TextView)alertDialog.findViewById(R.id.foodName);
-        textView.setText(str);
+        textView.setText(tag);
+
+        // show the quality period of food in AlertDialog
+      //  int quality_period=QualityPeriod.getPeriod(str);
+        TextView textView2=(TextView)alertDialog.findViewById(R.id.qualityPeriod);
+        String quality_period= qualityPeriodFromDB(tag);
+        textView2.setText(quality_period);
     }
 
+    public void confirm(View view) throws JSONException, ParseException {
+        GridLayout gridLayout = (GridLayout) findViewById(R.id.AlreadyAdd);
+        int childCount=gridLayout.getChildCount();
+        for(int i=0;i<childCount;i++){
+            ImageButton imageButton=(ImageButton)gridLayout.getChildAt(i);
+            String tag=(String)imageButton.getTag();
+
+            int identifier = getResources().getIdentifier(tag, "drawable","com.example.mobileapp.fresh");
+            String iden=String.valueOf(identifier);
+          //  String expirDate=this.calExpiration();
+
+
+        //    sendPostMessage(tag,iden,date);
+        }
+
+
+
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    public void sendPostMessage(final String tag, final String iden, final String date) throws JSONException {
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://52.10.237.82:8080/api/food";
+
+
+        /*JSONObject obj = new JSONObject();
+        obj.put("foodname", tag);
+        obj.put("add_time", date);
+        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                (Request.Method.POST, url,obj, new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Log.d("Message: " ,"1");
+                    }
+                }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.d("Message: ", error.getMessage());
+                    }
+                });
+        queue.add(jsObjRequest);*/
+    }
+
+   /* public String calExpiration() throws ParseException {
+       SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
+        Date date_now=simpleDateFormat.parse(this.getTime());
+
+    }*/
+
+    public String qualityPeriodFromDB(String tag){
+        SQLiteDatabase mSQLiteDatabase=this.openOrCreateDatabase("QualityPeriod",MODE_PRIVATE,null);
+   /*     String CREATE_TABLE=" CREATE TABLE QualityPeriod (_id integer primary key autoincrement , name text , day text)";
+        mSQLiteDatabase.execSQL(CREATE_TABLE);*/
+
+      //  String INSERT_DATA="INSERT INTO QualityPeriod(name, day) values('pumpkin', '8')";
+      //  mSQLiteDatabase.execSQL(INSERT_DATA);
+
+      //  String sql = "UPDATE QualityPeriod SET day = '15' WHERE name = 'beans' ";
+
+      //  mSQLiteDatabase.execSQL(sql);
+        Cursor mcursor=mSQLiteDatabase.query("QualityPeriod", new String[]{"name","day"},"name=?",
+                new String[]{tag}, null, null, null);
+        mcursor.moveToFirst();
+        String quality_period=mcursor.getString(1);
+        mSQLiteDatabase.close();
+        return quality_period;
+
+    }
+
+    public void qualityPeriodToDB(String tag,String qualityPeriod){
+        SQLiteDatabase mSQLiteDatabase=this.openOrCreateDatabase("QualityPeriod",MODE_PRIVATE,null);
+        String sql = "UPDATE QualityPeriod SET day = "+"'"+qualityPeriod+"'"+" WHERE name = "+"'"+tag+"'";
+        mSQLiteDatabase.execSQL(sql);
+    }
 }
 
