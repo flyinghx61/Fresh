@@ -38,6 +38,12 @@ public class AddItemActivity extends ActionBarActivity {
 
     int click_times = 0;
 
+    //default set fridge be clicked while freezer not being clicked
+    boolean fridgeClicked = true;
+    boolean freezerClicked = false;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +51,7 @@ public class AddItemActivity extends ActionBarActivity {
         setContentView(R.layout.activity_add_item);
 
         setActionBar();
+        addFridgeFreezer();
         setReturnButton();
         TextView textView = (TextView) findViewById(R.id.textView);
         textView.setText(getTime());
@@ -108,6 +115,47 @@ public class AddItemActivity extends ActionBarActivity {
             click_times++;
         }
     }
+
+    public void addFridgeFreezer() {
+        TabHost tabHost = (TabHost) findViewById(R.id.tabHostFridgeFreezer);
+        tabHost.setup();
+        tabHost.addTab(tabHost.newTabSpec("scrollViewFridge").setIndicator("Refrigerator")
+                .setContent(R.id.scrollViewFridge));
+
+        tabHost.addTab(tabHost.newTabSpec("scrollViewFreezer").setIndicator("Freezer")
+                .setContent(R.id.scrollViewFreezer));
+
+        TabWidget tabWidget = tabHost.getTabWidget();
+        for (int i = 0; i < tabWidget.getChildCount(); i++) {
+            TextView tv = (TextView) tabWidget.getChildAt(i).findViewById(android.R.id.title);
+            tv.setAllCaps(false);
+            tv.setGravity(Gravity.CENTER);
+            tv.setTextSize(17);
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+            lp.setMargins(0, 20, 0, 1);
+            tv.setLayoutParams(lp);
+            tv.setWidth(180);
+            tv.setSingleLine();
+            tv.setTextColor(Color.WHITE);
+
+            tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+                @Override
+                public void onTabChanged(String tabId) {
+                    if (tabId == "scrollViewFridge") {
+                        fridgeClicked = true;
+                        freezerClicked = false;
+                    }
+                    if (tabId == "scrollViewFreezer") {
+                        fridgeClicked = false;
+                        freezerClicked = true;
+                    }
+                }
+            });
+        }
+
+    }
+
+
 
     public void addTwoTab(){
         TabHost tabHost = (TabHost) findViewById(R.id.tabHost2);
@@ -192,6 +240,8 @@ public class AddItemActivity extends ActionBarActivity {
     public void add_item_to_grid(final View view) {
         show_dialog(view);
         ImageButton imageButton=(ImageButton)view;
+
+        //generate a new instance of ImageButton
         final ImageButton new_imageButton=new ImageButton(this);
         new_imageButton.setTag(view.getTag());
         new_imageButton.setImageDrawable(imageButton.getDrawable());
@@ -200,33 +250,51 @@ public class AddItemActivity extends ActionBarActivity {
             public void onClick(View v) {
                 LayoutInflater inflater = getLayoutInflater();
                 final View layout = inflater.inflate(R.layout.food_information_layout, (ViewGroup) findViewById(R.id.foodInformation));
+
+                TextView textView=(TextView)layout.findViewById(R.id.foodName);
+                textView.setText((String)new_imageButton.getTag());
+
+//                TextView textView2=(TextView)layout.findViewById(R.id.qualityPeriod);
+//                String quality_period= qualityPeriodFromDB((String)view.getTag());
+//                textView2.setText(quality_period);
+
+
                 AlertDialog alertDialog=new AlertDialog.Builder(AddItemActivity.this)
                         .setTitle("Food Information").setView(layout).setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                TextView textView2=(TextView)layout.findViewById(R.id.qualityPeriod);
-                                String quality_period=textView2.getText().toString();
-                                qualityPeriodToDB((String)view.getTag(),quality_period);
+                                TextView textView2 = (TextView) layout.findViewById(R.id.qualityPeriod);
+                                String quality_period = textView2.getText().toString();
+//                                qualityPeriodToDB((String)view.getTag(),quality_period);
                             }
                         })
                         .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                GridLayout gridLayout = (GridLayout) findViewById(R.id.AlreadyAdd);
-                                gridLayout.removeView(new_imageButton);
+                                if (fridgeClicked) {
+                                    GridLayout gridLayout = (GridLayout) findViewById(R.id.AlreadyAddFridge);
+                                    gridLayout.removeView(new_imageButton);
+                                }
+                                if (freezerClicked) {
+                                    GridLayout gridLayout = (GridLayout) findViewById(R.id.AlreadyAddFreezer);
+                                    gridLayout.removeView(new_imageButton);
+                                }
                             }
                         }).show();
-                TextView textView=(TextView)alertDialog.findViewById(R.id.foodName);
-                textView.setText((String)new_imageButton.getTag());
-
-                TextView textView2=(TextView)alertDialog.findViewById(R.id.qualityPeriod);
-                String quality_period= qualityPeriodFromDB((String)view.getTag());
-                textView2.setText(quality_period);
 
             }
         });
-        GridLayout gridLayout=(GridLayout)this.findViewById(R.id.AlreadyAdd);
-        gridLayout.addView(new_imageButton);
+
+        if (fridgeClicked) {
+            GridLayout gridLayout=(GridLayout)this.findViewById(R.id.AlreadyAddFridge);
+            gridLayout.addView(new_imageButton);
+        }
+
+        if (freezerClicked) {
+            GridLayout gridLayout=(GridLayout)this.findViewById(R.id.AlreadyAddFreezer);
+            gridLayout.addView(new_imageButton);
+        }
+
     }
 
     public void show_dialog(View view){
@@ -240,36 +308,56 @@ public class AddItemActivity extends ActionBarActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         TextView textView2=(TextView)layout.findViewById(R.id.qualityPeriod);
                         String quality_period=textView2.getText().toString();
-                        qualityPeriodToDB(tag,quality_period);
+//                        qualityPeriodToDB(tag,quality_period);
                     }
                 })
-                .setNegativeButton("Cancel", null).show();
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                }).show();
         TextView textView=(TextView)alertDialog.findViewById(R.id.foodName);
         textView.setText(tag);
 
         // show the quality period of food in AlertDialog
       //  int quality_period=QualityPeriod.getPeriod(str);
         TextView textView2=(TextView)alertDialog.findViewById(R.id.qualityPeriod);
-        String quality_period= qualityPeriodFromDB(tag);
-        textView2.setText(quality_period);
+//        String quality_period= qualityPeriodFromDB(tag);
+//        textView2.setText(quality_period);
     }
 
-    public void confirm(View view) throws JSONException, ParseException {
-        GridLayout gridLayout = (GridLayout) findViewById(R.id.AlreadyAdd);
-        int childCount=gridLayout.getChildCount();
-        for(int i=0;i<childCount;i++){
-            ImageButton imageButton=(ImageButton)gridLayout.getChildAt(i);
+    public void confirm(View view)  throws JSONException {
+
+
+        GridLayout gridLayoutFridge = (GridLayout) findViewById(R.id.AlreadyAddFridge);
+        int childCountFridge=gridLayoutFridge.getChildCount();
+        for(int i=0;i<childCountFridge;i++){
+            ImageButton imageButton=(ImageButton)gridLayoutFridge.getChildAt(i);
             String tag=(String)imageButton.getTag();
 
             int identifier = getResources().getIdentifier(tag, "drawable","com.example.mobileapp.fresh");
             String iden=String.valueOf(identifier);
-          //  String expirDate=this.calExpiration();
-
-
-        //    sendPostMessage(tag,iden,date);
+//            String expirDate=this.calExpiration();
+//
+//
+//            sendPostMessage(tag,iden,date);
         }
 
 
+        GridLayout gridLayoutFreezer = (GridLayout) findViewById(R.id.AlreadyAddFreezer);
+        int childCountFreezer=gridLayoutFreezer.getChildCount();
+        for(int i=0;i<childCountFreezer;i++){
+            ImageButton imageButton=(ImageButton)gridLayoutFreezer.getChildAt(i);
+            String tag=(String)imageButton.getTag();
+
+            int identifier = getResources().getIdentifier(tag, "drawable","com.example.mobileapp.fresh");
+            String iden=String.valueOf(identifier);
+//            String expirDate=this.calExpiration();
+//
+//
+//            sendPostMessage(tag,iden,date);
+        }
 
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
