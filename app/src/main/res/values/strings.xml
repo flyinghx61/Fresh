@@ -20,7 +20,7 @@
     <string name="cabbage">cabbage</string>
     <string name="bellpepper">bellpepper</string>
     <string name="celery">celery</string>
-    <string name="cawliflower">cawliflower</string>
+    <string name="cauliflower">cauliflower</string>
     <string name="pumpkin">pumpkin</string>
 
     <string-array name="filter_array">

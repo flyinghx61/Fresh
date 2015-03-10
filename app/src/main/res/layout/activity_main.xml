@@ -3,120 +3,65 @@
     android:layout_height="fill_parent"
     tools:context=".MainActivity"
     android:background="#fff6fff7"
-    android:clickable="true">
+    android:clickable="true"
+    android:id="@+id/MainRelativeLayout">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_weight="1"
-        android:background="#ffaaff56"
-        android:layout_alignParentTop="false">
-
-        <Button
-            android:background="@drawable/buttonstylegreen"
-            android:layout_width="180dp"
-            android:layout_height="30dp"
-            android:text="Refrigerator"
-            android:id="@+id/button"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="10dp"
-            android:layout_marginBottom="10dp"
-            android:textColor="#ffffffff"
-            android:textAllCaps="false"
-            android:clickable="true"
-            android:layout_alignParentTop="false"
-            android:layout_marginTop="10dp"/>
-        <Button
-            android:background="@drawable/buttonstylegreen"
-            android:layout_width="180dp"
-            android:layout_height="30dp"
-            android:text="Freezer"
-            android:id="@+id/button2"
-            android:layout_toEndOf="@+id/button"
-            android:layout_toRightOf="@+id/button"
-            android:textColor="#ffffffff"
-            android:textAllCaps="false"
-            android:clickable="true"
-            android:layout_marginTop="10dp" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_marginTop="0dp"
         android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="50dp"
-        android:background="#feecefff"
-        android:id="@+id/Date">
+        android:layout_height="55dp"
+        android:background="#ffaaff56" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView2"
-            android:textColor="#ff262626"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="130dp"
-            android:textSize="18dp"
-            android:gravity="center" />
-
-    </RelativeLayout>
-
-    <RelativeLayout
+    <TabHost
         android:layout_width="fill_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="325dp"
-        android:background="#feecefff">
+        android:layout_height="fill_parent"
+        android:id="@+id/tabHost3">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView3"
-            android:layout_centerVertical="true"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_marginLeft="130dp"
-            android:textColor="#ff262626"
-            android:textSize="18dp" />
-    </RelativeLayout>
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:id="@+id/Line3"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="435dp"
-        android:background="#61202020"
-        android:layout_alignParentTop="false" />
-
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="1dp"
-        android:text="New Text"
-        android:id="@+id/Line4"
-        android:background="#61202020"
-        android:layout_marginTop="505dp"
-        android:autoText="true" />
-
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="240dp"
-        android:id="@+id/scrollView2"
-        android:layout_alignTop="@+id/Date"
-        android:layout_marginTop="40dp" >
-
-        <GridLayout
+        <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:columnCount="4">
+            android:orientation="vertical">
 
-            <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:id="@+id/imageButton" />
-        </GridLayout>
-    </ScrollView>
+            <TabWidget
+                android:id="@android:id/tabs"
+                android:layout_width="fill_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/buttonstylegreen"
+                android:layout_marginTop="5dp"></TabWidget>
+
+            <FrameLayout
+                android:id="@android:id/tabcontent"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <ScrollView
+                    android:layout_width="fill_parent"
+                    android:layout_height="fill_parent"
+                    android:id="@+id/FridgeScrollView"
+                    android:layout_marginTop="10dp" >
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/FridgeInterface"></RelativeLayout>
+                </ScrollView>
+
+                <ScrollView
+                    android:layout_width="fill_parent"
+                    android:layout_height="509dp"
+                    android:id="@+id/FreezerScrollView"
+                    android:layout_marginTop="10dp">
+
+                    <RelativeLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:id="@+id/FreezerInterface" />
+                </ScrollView>
+
+            </FrameLayout>
+
+        </LinearLayout>
+    </TabHost>
 
 </RelativeLayout>

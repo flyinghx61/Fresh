@@ -257,7 +257,7 @@
                                             android:tag="@string/broccoli"
                                             android:layout_marginLeft="20dp"
                                             android:layout_marginRight="0dp"
-                                            android:onClick="add_item_to_grid"/>
+                                            android:onClick="show_dialog"/>
 
                                         <ImageButton
                                             android:layout_width="70dp"
@@ -268,7 +268,7 @@
                                             android:src="@drawable/carrot"
                                             android:tag="@string/carrot"
                                             android:layout_marginLeft="16dp"
-                                            android:onClick="add_item_to_grid"/>
+                                            android:onClick="show_dialog"/>
 
                                         <ImageButton
                                             android:layout_width="70dp"
@@ -279,7 +279,7 @@
                                             android:src="@drawable/tomato"
                                             android:tag="@string/tomato"
                                             android:layout_marginLeft="16dp"
-                                            android:onClick="add_item_to_grid"/>
+                                            android:onClick="show_dialog"/>
 
                                         <ImageButton
                                             android:layout_width="70dp"
@@ -291,7 +291,7 @@
                                             android:tag="@string/cucumber"
                                             android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
-                                            android:onClick="add_item_to_grid"/>
+                                            android:onClick="show_dialog"/>
 
                                         <ImageButton
                                             android:layout_width="70dp"
@@ -303,7 +303,7 @@
                                             android:src="@drawable/potatoes"
                                             android:layout_marginLeft="15dp"
                                             android:layout_marginTop="5dp"
-                                            android:onClick="add_item_to_grid"/>
+                                            android:onClick="show_dialog"/>
 
                                         <ImageButton
                                             android:layout_width="70dp"
@@ -315,7 +315,7 @@
                                             android:tag="@string/onion"
                                             android:layout_marginLeft="16dp"
                                             android:layout_marginTop="5dp"
-                                            android:onClick="add_item_to_grid"/>
+                                            android:onClick="show_dialog"/>
 
                                         <ImageButton
                                             android:layout_width="70dp"
@@ -327,7 +327,7 @@
                                             android:tag="@string/lettuce"
                                             android:layout_marginTop="5dp"
                                             android:layout_marginLeft="16dp"
-                                            android:onClick="add_item_to_grid"/>
+                                            android:onClick="show_dialog"/>
 
                                         <ImageButton
                                             android:layout_width="70dp"
@@ -340,7 +340,7 @@
                                             android:layout_marginTop="5dp"
                                             android:layout_marginRight="0dp"
                                             android:layout_marginLeft="16dp"
-                                            android:onClick="add_item_to_grid"/>
+                                            android:onClick="show_dialog"/>
 
                                         <ImageButton
                                             android:layout_width="70dp"
@@ -353,7 +353,7 @@
                                             android:layout_marginLeft="15dp"
                                             android:layout_marginTop="5dp"
                                             android:layout_marginRight="0dp"
-                                            android:onClick="add_item_to_grid"/>
+                                            android:onClick="show_dialog"/>
 
                                         <ImageButton
                                             android:layout_width="70dp"
@@ -365,7 +365,7 @@
                                             android:tag="@string/mushroom"
                                             android:layout_marginLeft="16dp"
                                             android:layout_marginTop="5dp"
-                                            android:onClick="add_item_to_grid"/>
+                                            android:onClick="show_dialog"/>
 
                                         <ImageButton
                                             android:layout_width="70dp"
@@ -377,7 +377,7 @@
                                             android:tag="@string/chillies"
                                             android:layout_marginLeft="16dp"
                                             android:layout_marginTop="5dp"
-                                            android:onClick="add_item_to_grid"/>
+                                            android:onClick="show_dialog"/>
 
                                         <ImageButton
                                             android:layout_width="70dp"
@@ -389,7 +389,7 @@
                                             android:tag="@string/cabbage"
                                             android:layout_marginLeft="16dp"
                                             android:layout_marginTop="5dp"
-                                            android:onClick="add_item_to_grid"/>
+                                            android:onClick="show_dialog"/>
 
                                         <ImageButton
                                             android:layout_width="70dp"
@@ -402,7 +402,7 @@
                                             android:layout_marginLeft="15dp"
                                             android:layout_marginTop="5dp"
                                             android:layout_marginRight="0dp"
-                                            android:onClick="add_item_to_grid"/>
+                                            android:onClick="show_dialog"/>
 
                                         <ImageButton
                                             android:layout_width="70dp"
@@ -414,7 +414,7 @@
                                             android:tag="@string/celery"
                                             android:layout_marginLeft="16dp"
                                             android:layout_marginTop="5dp"
-                                            android:onClick="add_item_to_grid"/>
+                                            android:onClick="show_dialog"/>
 
                                         <ImageButton
                                             android:layout_width="70dp"
@@ -423,10 +423,10 @@
                                             android:layout_row="3"
                                             android:layout_column="2"
                                             android:src="@drawable/cauliflower"
-                                            android:tag="@string/cawliflower"
+                                            android:tag="@string/cauliflower"
                                             android:layout_marginLeft="16dp"
                                             android:layout_marginTop="5dp"
-                                            android:onClick="add_item_to_grid"/>
+                                            android:onClick="show_dialog"/>
 
                                         <ImageButton
                                             android:layout_width="70dp"
@@ -438,7 +438,7 @@
                                             android:tag="@string/pumpkin"
                                             android:layout_marginLeft="16dp"
                                             android:layout_marginTop="5dp"
-                                            android:onClick="add_item_to_grid"/>
+                                            android:onClick="show_dialog"/>
                                     </GridLayout>
 
                                     <GridLayout
