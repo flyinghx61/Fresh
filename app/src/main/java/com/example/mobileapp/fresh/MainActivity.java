@@ -345,8 +345,8 @@ public class MainActivity extends ActionBarActivity {
         gridLayout.setLayoutParams(grid_param);
         relativeLayout1.addView(gridLayout);
 
-            //   Add image on gridlayout
-            for(int i=5;i<response.length();i++){
+        //   Add image on gridlayout
+        for(int i=5;i<response.length();i++){
             JSONObject jsonObject=(JSONObject)response.get(i);
             String food_date=jsonObject.getString("add_time");
             String store_place=jsonObject.getString("store_place");
@@ -355,7 +355,7 @@ public class MainActivity extends ActionBarActivity {
                 ImageButton imageButton=new ImageButton(this);
                 imageButton.setImageResource(identefier);
                 gridLayout.addView(imageButton);
-            }
+             }
         }
     }
 }
