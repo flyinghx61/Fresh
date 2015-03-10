@@ -345,22 +345,23 @@ public class AddItemActivity extends ActionBarActivity {
             int identifier = getResources().getIdentifier(tag, "drawable","com.example.mobileapp.fresh");
             String iden=String.valueOf(identifier);
 
+            String quality_period=qualityPeriodFromDB(tag);
          //   String expirDate=this.calExpiration();
 
-            sendPostMessage(tag,iden,place);
+            sendPostMessage(tag,iden,place,quality_period);
         }
     }
 
-    public void sendPostMessage(final String tag, final String iden,String place) throws JSONException {
+    public void sendPostMessage(final String tag, final String iden,String place,String quality_period) throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(this);
         String url = "http://52.10.237.82:8080/api/food";
-
 
         JSONObject obj = new JSONObject();
         obj.put("foodname", tag);
         obj.put("add_time", this.getTime());
         obj.put("image_id",iden);
         obj.put("store_place",place);
+        obj.put("expire_period",quality_period);
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.POST, url,obj, new Response.Listener<JSONObject>() {
                     @Override
@@ -387,8 +388,8 @@ public class AddItemActivity extends ActionBarActivity {
      //  String CREATE_TABLE=" CREATE TABLE QualityPeriod (_id integer primary key autoincrement , name text , day text)";
      //  mSQLiteDatabase.execSQL(CREATE_TABLE);
 
-         String INSERT_DATA="INSERT INTO QualityPeriod (name, day) values ('cauliflower', '6')";
-           mSQLiteDatabase.execSQL(INSERT_DATA);
+      //   String INSERT_DATA="INSERT INTO QualityPeriod (name, day) values ('cauliflower', '6')";
+      //     mSQLiteDatabase.execSQL(INSERT_DATA);
 
       //  String sql = "UPDATE QualityPeriod SET day = '15' WHERE name = 'beans' ";
 

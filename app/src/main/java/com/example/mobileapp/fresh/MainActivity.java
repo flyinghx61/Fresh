@@ -1,12 +1,15 @@
 package com.example.mobileapp.fresh;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -351,9 +354,29 @@ public class MainActivity extends ActionBarActivity {
             String food_date=jsonObject.getString("add_time");
             String store_place=jsonObject.getString("store_place");
             if(food_date.equals(date) && store_place.equals(place)){
+                final String foodname=jsonObject.getString("foodname");
                 int identefier=Integer.valueOf(jsonObject.getString("image_id"));
+                final String quality_period=jsonObject.getString("expire_period");
                 ImageButton imageButton=new ImageButton(this);
                 imageButton.setImageResource(identefier);
+
+                imageButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        LayoutInflater inflater = getLayoutInflater();
+                        final View layout = inflater.inflate(R.layout.food_information_layout, (ViewGroup) findViewById(R.id.foodInformation));
+
+                        TextView textView=(TextView)layout.findViewById(R.id.foodName);
+                        textView.setText(foodname);
+
+                        TextView textView2=(TextView)layout.findViewById(R.id.qualityPeriod);
+                        textView2.setText(quality_period);
+
+                        AlertDialog alertDialog=new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("Food Information").setView(layout).setPositiveButton("Confirm",null)
+                                .setNegativeButton("Delete",null).show();
+                    }
+                });
                 gridLayout.addView(imageButton);
              }
         }
