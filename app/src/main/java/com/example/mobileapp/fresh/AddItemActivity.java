@@ -37,6 +37,7 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 
@@ -85,7 +86,7 @@ public class AddItemActivity extends ActionBarActivity {
     }
 
     public String getTime() {
-        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String t = format.format(new Date());
         return t;
     }
@@ -239,6 +240,43 @@ public class AddItemActivity extends ActionBarActivity {
         }
     }
 
+    public void show_dialog(final View view){
+        // show the name of food in AlertDialog
+        final String tag = String.valueOf(view.getTag());
+        LayoutInflater inflater = getLayoutInflater();
+        final View layout = inflater.inflate(R.layout.food_information_layout,(ViewGroup) findViewById(R.id.foodInformation));
+
+        final AlertDialog alertDialog=new AlertDialog.Builder(AddItemActivity.this)
+                .setTitle("Food Information").setView(layout).setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        add_item_to_grid(view);
+                        TextView textView2=(TextView)layout.findViewById(R.id.qualityPeriod);
+                        String quality_period=textView2.getText().toString();
+                        qualityPeriodToDB(tag,quality_period);
+                    }
+                })
+                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                    }
+                }).show();
+        TextView textView=(TextView)alertDialog.findViewById(R.id.foodName);
+        textView.setText(tag);
+
+        TextView textView2=(TextView)alertDialog.findViewById(R.id.qualityPeriod);
+        String quality_period= qualityPeriodFromDB(tag);
+        textView2.setText(quality_period);
+
+        TextView textView3=(TextView)layout.findViewById(R.id.bestBefore);
+        try {
+            String bestBefore=calculateDate(quality_period);
+            textView3.setText(bestBefore);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void add_item_to_grid(final View view) {
         ImageButton imageButton=(ImageButton)view;
 
@@ -258,6 +296,14 @@ public class AddItemActivity extends ActionBarActivity {
                 TextView textView2=(TextView)layout.findViewById(R.id.qualityPeriod);
                 String quality_period= qualityPeriodFromDB((String)view.getTag());
                 textView2.setText(quality_period);
+
+                TextView textView3=(TextView)layout.findViewById(R.id.bestBefore);
+                try {
+                    String bestBefore=calculateDate(quality_period);
+                    textView3.setText(bestBefore);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
 
                 AlertDialog alertDialog=new AlertDialog.Builder(AddItemActivity.this)
                         .setTitle("Food Information").setView(layout).setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
@@ -295,35 +341,6 @@ public class AddItemActivity extends ActionBarActivity {
             gridLayout.addView(new_imageButton);
         }
 
-    }
-
-    public void show_dialog(final View view){
-        // show the name of food in AlertDialog
-        final String tag = String.valueOf(view.getTag());
-        LayoutInflater inflater = getLayoutInflater();
-        final View layout = inflater.inflate(R.layout.food_information_layout,(ViewGroup) findViewById(R.id.foodInformation));
-
-        final AlertDialog alertDialog=new AlertDialog.Builder(AddItemActivity.this)
-                .setTitle("Food Information").setView(layout).setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        add_item_to_grid(view);
-                        TextView textView2=(TextView)layout.findViewById(R.id.qualityPeriod);
-                        String quality_period=textView2.getText().toString();
-                        qualityPeriodToDB(tag,quality_period);
-                    }
-                })
-                .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                    }
-                }).show();
-        TextView textView=(TextView)alertDialog.findViewById(R.id.foodName);
-        textView.setText(tag);
-
-        TextView textView2=(TextView)alertDialog.findViewById(R.id.qualityPeriod);
-        String quality_period= qualityPeriodFromDB(tag);
-        textView2.setText(quality_period);
     }
 
     public void confirm(View view)  throws JSONException {
@@ -408,6 +425,21 @@ public class AddItemActivity extends ActionBarActivity {
         String sql = "UPDATE QualityPeriod SET day = "+"'"+qualityPeriod+"'"+" WHERE name = "+"'"+tag+"'";
         mSQLiteDatabase.execSQL(sql);
         mSQLiteDatabase.close();
+    }
+
+    public String calculateDate(String period) throws ParseException {
+        String dateInString = this.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        Calendar c = Calendar.getInstance(); // Get Calendar Instance
+        c.setTime(sdf.parse(dateInString));
+
+        c.add(Calendar.DATE, Integer.parseInt(period));  // add 45 days
+
+        Date resultdate = new Date(c.getTimeInMillis());   // Get new time
+        dateInString = sdf.format(resultdate);
+        Log.d("Message: ",dateInString);
+        return dateInString;
     }
 }
 

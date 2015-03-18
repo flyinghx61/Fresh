@@ -2,12 +2,17 @@ package com.example.mobileapp.fresh;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.app.Notification;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,25 +31,30 @@ import android.widget.TabWidget;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 
 
 public class MainActivity extends ActionBarActivity {
     boolean fridgeClicked = true;
     boolean freezerClicked = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         getIntent();
@@ -129,8 +139,9 @@ public class MainActivity extends ActionBarActivity {
         addFridgeFreezer();
         getDatabaseResponse();
 
+       sendNotification();
 
-       // int identifier = getResources().getIdentifier("Beans", "drawable","com.example.mobileapp.fresh");
+        // int identifier = getResources().getIdentifier("Beans", "drawable","com.example.mobileapp.fresh");
       //  ImageButton imageButton2=(ImageButton)this.findViewById(R.id.imageButton);
       //  imageButton2.setImageResource(identifier);
 
@@ -217,7 +228,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public String getTime() {
-        SimpleDateFormat format = new SimpleDateFormat("MM-dd-yyyy");
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
         String t = format.format(new Date());
         return t;
     }
@@ -354,6 +365,7 @@ public class MainActivity extends ActionBarActivity {
             String food_date=jsonObject.getString("add_time");
             String store_place=jsonObject.getString("store_place");
             if(food_date.equals(date) && store_place.equals(place)){
+                final String id=jsonObject.getString("_id");
                 final String foodname=jsonObject.getString("foodname");
                 int identefier=Integer.valueOf(jsonObject.getString("image_id"));
                 final String quality_period=jsonObject.getString("expire_period");
@@ -366,19 +378,79 @@ public class MainActivity extends ActionBarActivity {
                         LayoutInflater inflater = getLayoutInflater();
                         final View layout = inflater.inflate(R.layout.food_information_layout, (ViewGroup) findViewById(R.id.foodInformation));
 
-                        TextView textView=(TextView)layout.findViewById(R.id.foodName);
+                        TextView textView = (TextView) layout.findViewById(R.id.foodName);
                         textView.setText(foodname);
 
-                        TextView textView2=(TextView)layout.findViewById(R.id.qualityPeriod);
+                        TextView textView2 = (TextView) layout.findViewById(R.id.qualityPeriod);
                         textView2.setText(quality_period);
 
-                        AlertDialog alertDialog=new AlertDialog.Builder(MainActivity.this)
-                                .setTitle("Food Information").setView(layout).setPositiveButton("Confirm",null)
-                                .setNegativeButton("Delete",null).show();
+                        TextView textView3=(TextView)layout.findViewById(R.id.bestBefore);
+                        try {
+                            String bestBefore=calculateDate(quality_period);
+                            textView3.setText(bestBefore);
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+
+                        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
+                                .setTitle("Food Information").setView(layout).setPositiveButton("Confirm", null)
+                                .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+                                        String url = "http://52.10.237.82:8080/api/food";
+                                        JSONObject obj = new JSONObject();
+                                        try {
+                                            obj.put("food_id",id);
+                                        } catch (JSONException e) {
+                                            e.printStackTrace();
+                                        }
+
+                                        JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                                                (Request.Method.DELETE, url, obj, new Response.Listener<JSONObject>() {
+                                                    @Override
+                                                    public void onResponse(JSONObject response) {
+                                                        Log.d("Message: ", "1");
+                                                    }
+                                                }, new Response.ErrorListener() {
+                                                    @Override
+                                                    public void onErrorResponse(VolleyError error) {
+                                                        Log.d("Message: ", error.getMessage());
+                                                    }
+                                                });
+                                        queue.add(jsObjRequest);
+                                    }
+                                }).show();
                     }
                 });
                 gridLayout.addView(imageButton);
              }
         }
     }
+
+    public String calculateDate(String period) throws ParseException {
+        String dateInString = this.getTime();
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+
+        Calendar c = Calendar.getInstance(); // Get Calendar Instance
+        c.setTime(sdf.parse(dateInString));
+
+        c.add(Calendar.DATE, Integer.parseInt(period));  // add 45 days
+
+        Date resultdate = new Date(c.getTimeInMillis());   // Get new time
+        dateInString = sdf.format(resultdate);
+        Log.d("Message: ",dateInString);
+        return dateInString;
+    }
+
+    public void sendNotification(){
+        NotificationCompat.Builder mBuilder =
+                new NotificationCompat.Builder(this)
+                        .setSmallIcon(R.drawable.beans)
+                        .setContentTitle("Warning")
+                        .setContentText("Hello World!");
+        NotificationManager nm= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+        nm.notify(1,mBuilder.build());
+    }
+
 }
