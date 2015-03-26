@@ -2,6 +2,7 @@ package com.example.mobileapp.fresh;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
+import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -37,6 +38,8 @@ import org.json.JSONObject;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -48,6 +51,7 @@ public class AddItemActivity extends ActionBarActivity {
     //default set fridge be clicked while freezer not being clicked
     boolean fridgeClicked = true;
     boolean freezerClicked = false;
+    ArrayList add_times=new ArrayList();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,6 +65,7 @@ public class AddItemActivity extends ActionBarActivity {
         TextView textView = (TextView) findViewById(R.id.textView);
         textView.setText(getTime());
         addTwoTab();
+        addMostlyAdded();
     }
 
 //    @Override
@@ -100,7 +105,7 @@ public class AddItemActivity extends ActionBarActivity {
         actionBar.setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setDisplayShowCustomEnabled(true);
-        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#adff2f"));
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#B9CB41"));
         actionBar.setBackgroundDrawable(colorDrawable);
     }
 
@@ -114,7 +119,7 @@ public class AddItemActivity extends ActionBarActivity {
     }
 
     public void category_onClick() {
-            adjust_red_layout();
+            adjust_red_layout_category();
         if (0 == click_times) {
             add_tab();
             click_times++;
@@ -142,7 +147,6 @@ public class AddItemActivity extends ActionBarActivity {
             tv.setWidth(180);
             tv.setSingleLine();
             tv.setTextColor(Color.WHITE);
-
             tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
                 @Override
                 public void onTabChanged(String tabId) {
@@ -163,8 +167,8 @@ public class AddItemActivity extends ActionBarActivity {
     public void addTwoTab(){
         TabHost tabHost = (TabHost) findViewById(R.id.tabHost2);
         tabHost.setup();
-        tabHost.addTab(tabHost.newTabSpec("linearLayout").setIndicator("Mostly Added")
-                .setContent(R.id.linearLayout));
+        tabHost.addTab(tabHost.newTabSpec("MostlyAdded").setIndicator("Mostly Added")
+                .setContent(R.id.MostlyAdded));
 
         tabHost.addTab(tabHost.newTabSpec("linearLayout2").setIndicator("Categories")
                 .setContent(R.id.linearLayout2));
@@ -188,17 +192,17 @@ public class AddItemActivity extends ActionBarActivity {
                 if (tabId.equals("linearLayout2")) {
                     category_onClick();
                 }
-                if (tabId.equals("linearLayout")) {
+                if (tabId.equals("MostlyAdded")) {
                     RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.red_rectan);
                     RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) relativeLayout.getLayoutParams();
-                    layoutParams.height = 180;
+                    layoutParams.height = 160;
                     relativeLayout.setLayoutParams(layoutParams);
                 }
             }
         });
     }
 
-    public void adjust_red_layout() {
+    public void adjust_red_layout_category() {
         RelativeLayout relativeLayout = (RelativeLayout) this.findViewById(R.id.red_rectan);
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) relativeLayout.getLayoutParams();
         layoutParams.height = 240;
@@ -251,7 +255,7 @@ public class AddItemActivity extends ActionBarActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         add_item_to_grid(view);
-                        TextView textView2=(TextView)layout.findViewById(R.id.qualityPeriod);
+                        TextView textView2=(TextView)layout.findViewById(R.id.DaysLeft);
                         String quality_period=textView2.getText().toString();
                         qualityPeriodToDB(tag,quality_period);
                     }
@@ -264,7 +268,7 @@ public class AddItemActivity extends ActionBarActivity {
         TextView textView=(TextView)alertDialog.findViewById(R.id.foodName);
         textView.setText(tag);
 
-        TextView textView2=(TextView)alertDialog.findViewById(R.id.qualityPeriod);
+        TextView textView2=(TextView)alertDialog.findViewById(R.id.DaysLeft);
         String quality_period= qualityPeriodFromDB(tag);
         textView2.setText(quality_period);
 
@@ -293,7 +297,7 @@ public class AddItemActivity extends ActionBarActivity {
                 TextView textView=(TextView)layout.findViewById(R.id.foodName);
                 textView.setText((String)new_imageButton.getTag());
 
-                TextView textView2=(TextView)layout.findViewById(R.id.qualityPeriod);
+                TextView textView2=(TextView)layout.findViewById(R.id.DaysLeft);
                 String quality_period= qualityPeriodFromDB((String)view.getTag());
                 textView2.setText(quality_period);
 
@@ -309,7 +313,7 @@ public class AddItemActivity extends ActionBarActivity {
                         .setTitle("Food Information").setView(layout).setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                TextView textView2 = (TextView) layout.findViewById(R.id.qualityPeriod);
+                                TextView textView2 = (TextView) layout.findViewById(R.id.DaysLeft);
                                 String quality_period = textView2.getText().toString();
                                 qualityPeriodToDB((String)view.getTag(),quality_period);
                             }
@@ -359,59 +363,50 @@ public class AddItemActivity extends ActionBarActivity {
             ImageButton imageButton=(ImageButton)gridLayout.getChildAt(i);
             String tag=(String)imageButton.getTag();
 
-            int identifier = getResources().getIdentifier(tag, "drawable","com.example.mobileapp.fresh");
-            String iden=String.valueOf(identifier);
-
             String quality_period=qualityPeriodFromDB(tag);
-         //   String expirDate=this.calExpiration();
 
-            sendPostMessage(tag,iden,place,quality_period);
+            addTimesInDB(tag);
+            sendPostMessage(tag,place,quality_period);
         }
     }
 
-    public void sendPostMessage(final String tag, final String iden,String place,String quality_period) throws JSONException {
+    public void sendPostMessage(final String tag,String place,String quality_period) throws JSONException {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://52.10.237.82:8080/api/food";
+        String url = "http://52.11.25.130:8080/api/food";
 
         JSONObject obj = new JSONObject();
         obj.put("foodname", tag);
         obj.put("add_time", this.getTime());
-        obj.put("image_id",iden);
         obj.put("store_place",place);
         obj.put("expire_period",quality_period);
         JsonObjectRequest jsObjRequest = new JsonObjectRequest
                 (Request.Method.POST, url,obj, new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
-                        Log.d("Message: ", "1");
+                        Log.d("Message: ", "Post Success");
                     }
                 }, new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Message: ", error.getMessage());
+                        Log.d("Message: ","Post failed");
                     }
                 });
         queue.add(jsObjRequest);
     }
 
-   /* public String calExpiration() throws ParseException {
-       SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
-        Date date_now=simpleDateFormat.parse(this.getTime());
-
-    }*/
-
     public String qualityPeriodFromDB(String tag){
        SQLiteDatabase mSQLiteDatabase=this.openOrCreateDatabase("QualityPeriod",MODE_PRIVATE,null);
      //  String CREATE_TABLE=" CREATE TABLE QualityPeriod (_id integer primary key autoincrement , name text , day text)";
      //  mSQLiteDatabase.execSQL(CREATE_TABLE);
+      //  String INSERT_COLUMN="ALTER TABLE QualityPeriod ADD times integer";
+     //   mSQLiteDatabase.execSQL(INSERT_COLUMN);
+     //   String INSERT_DATA="INSERT INTO QualityPeriod (name, day, times) values ('egg', '10', '-6')";
+      //    mSQLiteDatabase.execSQL(INSERT_DATA);
+      // mSQLiteDatabase.delete("QualityPeriod", "name=?", new String[]{"egg"});
+        //   String sql = "UPDATE QualityPeriod SET times = '0' WHERE name = 'pumpkin' ";
 
-      //   String INSERT_DATA="INSERT INTO QualityPeriod (name, day) values ('cauliflower', '6')";
-      //     mSQLiteDatabase.execSQL(INSERT_DATA);
-
-      //  String sql = "UPDATE QualityPeriod SET day = '15' WHERE name = 'beans' ";
-
-      //  mSQLiteDatabase.execSQL(sql);
-        Cursor mcursor=mSQLiteDatabase.query("QualityPeriod", new String[]{"name","day"},"name=?",
+     //   mSQLiteDatabase.execSQL(sql);
+        Cursor mcursor=mSQLiteDatabase.query("QualityPeriod", new String[]{"name","day","times"},"name=?",
                 new String[]{tag}, null, null, null);
         mcursor.moveToFirst();
         String quality_period=mcursor.getString(1);
@@ -438,8 +433,82 @@ public class AddItemActivity extends ActionBarActivity {
 
         Date resultdate = new Date(c.getTimeInMillis());   // Get new time
         dateInString = sdf.format(resultdate);
-        Log.d("Message: ",dateInString);
         return dateInString;
+    }
+
+    public void addTimesInDB(String tag){
+        SQLiteDatabase mSQLiteDatabase=this.openOrCreateDatabase("QualityPeriod",MODE_PRIVATE,null);
+
+        Cursor mcursor=mSQLiteDatabase.query("QualityPeriod", new String[]{"name","day","times"},"name=?",
+                new String[]{tag}, null, null, null);
+        mcursor.moveToFirst();
+        int times=mcursor.getInt(2);
+
+        int new_times=times-1;
+        Log.d("Message: ", String.valueOf(times));
+        ContentValues cv = new ContentValues();
+        cv.put("times", new_times);
+        mSQLiteDatabase.update("QualityPeriod", cv, "name=?",new String[]{tag});
+        mSQLiteDatabase.close();
+    }
+
+    public void addMostlyAdded(){
+        int added_number=0;
+        SQLiteDatabase mSQLiteDatabase=this.openOrCreateDatabase("QualityPeriod",MODE_PRIVATE,null);
+        Cursor mcursor=mSQLiteDatabase.query("QualityPeriod", new String[]{"name","day","times"},null,
+                null, null, null, null);
+        mcursor.moveToFirst();
+        do{
+     //       Log.d("foodname: ",mcursor.getString(0)+mcursor.getInt(2));
+            int times=mcursor.getInt(2);
+            add_times.add(times);
+        }
+        while(mcursor.moveToNext());
+
+        Object[] times_array=add_times.toArray();
+        Arrays.sort(times_array);
+
+        for(int i=0;i<16;i++){
+            if(added_number>15){
+                break;
+            }
+
+            if( i>0 && times_array[i-1] == times_array[i]){
+                continue;
+            }
+
+            int query_times=(int)times_array[i];
+            mcursor=mSQLiteDatabase.query("QualityPeriod", new String[]{"name","day","times"},"times=?",
+                    new String[]{String.valueOf(query_times)}, null, null, null);
+            mcursor.moveToFirst();
+            do{
+                if(added_number>15){
+                    break;
+                }
+                String foodname=mcursor.getString(0);
+
+                int identifier = getResources().getIdentifier(foodname, "drawable","com.example.mobileapp.fresh");
+
+                ImageButton imageButton=new ImageButton(this);
+                imageButton.setImageResource(identifier);
+                imageButton.setTag(foodname);
+                imageButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        show_dialog(v);
+                    }
+                });
+                GridLayout gridLayout=(GridLayout)this.findViewById(R.id.MostlyAdded);
+                gridLayout.addView(imageButton);
+                GridLayout.LayoutParams layoutParams=(GridLayout.LayoutParams)imageButton.getLayoutParams();
+                layoutParams.width=170;
+                layoutParams.height=150;
+                imageButton.setLayoutParams(layoutParams);
+                added_number++;
+            }
+            while(mcursor.moveToNext());
+        }
+        mSQLiteDatabase.close();
     }
 }
 

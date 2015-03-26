@@ -18,7 +18,7 @@
             android:layout_marginTop="0dp"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:background="#ffaaff56"></FrameLayout>
+            android:background="#B9CB41"></FrameLayout>
 
         <TabHost
             android:layout_width="fill_parent"
@@ -33,8 +33,8 @@
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="30dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="5dp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:background="@drawable/buttonstylegreen"></TabWidget>
@@ -43,7 +43,7 @@
             <FrameLayout
                     android:layout_width="fill_parent"
                     android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="5dp"
                     android:background="#3a210404"
                     android:id="@+id/Date">
 
@@ -154,9 +154,9 @@
         <RelativeLayout
             android:id="@+id/red_rectan"
             android:layout_width="fill_parent"
-            android:layout_height="80dp"
+            android:layout_height="90dp"
             android:layout_marginTop="0dp"
-            android:background="#FFFF4457">
+            android:background="#F15A59">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -185,7 +185,7 @@
                 <TabWidget
                     android:id="@android:id/tabs"
                     android:layout_width="fill_parent"
-                    android:layout_height="35dp"
+                    android:layout_height="40dp"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/buttonstylered"></TabWidget>
 
@@ -194,13 +194,17 @@
                     android:layout_width="fill_parent"
                     android:layout_height="350dp">
 
-                    <LinearLayout
-                        android:id="@+id/linearLayout"
+                    <GridLayout
+                        android:id="@+id/MostlyAdded"
                         android:layout_width="fill_parent"
                         android:layout_height="350dp"
-                        android:orientation="vertical">
+                        android:orientation="horizontal"
+                        android:columnCount="4"
+                        android:rowCount="4"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginLeft="10dp">
 
-                    </LinearLayout>
+                    </GridLayout>
 
                     <LinearLayout
                         android:id="@+id/linearLayout2"
@@ -445,31 +449,140 @@
                                         android:id="@+id/tab2"
                                         android:layout_width="fill_parent"
                                         android:layout_height="fill_parent"
-                                        android:orientation="vertical"></GridLayout>
+                                        android:orientation="vertical"
+                                        android:columnCount="4"
+                                        android:rowCount="4">
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/pear"
+                                            android:layout_row="0"
+                                            android:layout_column="0"
+                                            android:src="@drawable/pear"
+                                            android:tag="@string/pear"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/apple"
+                                            android:layout_row="0"
+                                            android:layout_column="1"
+                                            android:src="@drawable/apple"
+                                            android:tag="@string/apple"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/kiwi"
+                                            android:layout_row="0"
+                                            android:layout_column="2"
+                                            android:src="@drawable/kiwi"
+                                            android:tag="@string/kiwi"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+                                    </GridLayout>
 
                                     <GridLayout
                                     android:id="@+id/tab3"
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
-                                    android:orientation="vertical"></GridLayout>
+                                    android:orientation="vertical"
+                                        android:columnCount="4"
+                                        android:rowCount="4"></GridLayout>
 
                                     <GridLayout
                                         android:id="@+id/tab4"
                                         android:layout_width="fill_parent"
                                         android:layout_height="350dp"
-                                        android:orientation="vertical"></GridLayout>
+                                        android:orientation="vertical"
+                                        android:columnCount="4"
+                                        android:rowCount="4">
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/bread"
+                                            android:layout_row="0"
+                                            android:layout_column="0"
+                                            android:src="@drawable/bread"
+                                            android:tag="@string/bread"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/cookies"
+                                            android:layout_row="0"
+                                            android:layout_column="1"
+                                            android:src="@drawable/cookies"
+                                            android:tag="@string/cookies"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/cupcake"
+                                            android:layout_row="0"
+                                            android:layout_column="1"
+                                            android:src="@drawable/cupcake"
+                                            android:tag="@string/cupcake"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+                                    </GridLayout>
 
                                     <GridLayout
                                         android:id="@+id/tab5"
                                         android:layout_width="fill_parent"
                                         android:layout_height="fill_parent"
-                                        android:orientation="vertical"></GridLayout>
+                                        android:orientation="vertical"
+                                        android:columnCount="4"
+                                        android:rowCount="4">
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/milk"
+                                            android:layout_row="0"
+                                            android:layout_column="0"
+                                            android:src="@drawable/milk"
+                                            android:tag="@string/milk"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/egg"
+                                            android:layout_row="0"
+                                            android:layout_column="1"
+                                            android:src="@drawable/egg"
+                                            android:tag="@string/egg"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+                                    </GridLayout>
 
                                     <GridLayout
                                         android:id="@+id/tab6"
                                         android:layout_width="fill_parent"
                                         android:layout_height="fill_parent"
-                                        android:orientation="vertical"></GridLayout>
+                                        android:orientation="vertical"
+                                        android:columnCount="4"
+                                        android:rowCount="4"></GridLayout>
                                 </FrameLayout>
                             </LinearLayout>
                         </TabHost>

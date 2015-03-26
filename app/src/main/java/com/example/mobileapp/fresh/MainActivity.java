@@ -2,7 +2,6 @@ package com.example.mobileapp.fresh;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -101,7 +100,7 @@ public class MainActivity extends ActionBarActivity {
         actionBar.setDisplayShowCustomEnabled(true);
 
         //actionBar.setHomeButtonEnabled(true);
-        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#adff2f"));
+        ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#B9CB41"));
         actionBar.setBackgroundDrawable(colorDrawable);
         //actionBar.setTitle("                             Fresh");
 
@@ -146,7 +145,7 @@ public class MainActivity extends ActionBarActivity {
       //  imageButton2.setImageResource(identifier);
 
      /*   int[] icon = { R.drawable.apple,R.drawable.Bellpepper,R.drawable.bread,
-                R.drawable.Broccoli,R.drawable.Beans,R.drawable.pear,R.drawable.Pumpkin,R.drawable.Mushroom,R.drawable.Celery, R.drawable.Broccoli,R.drawable.eggs,R.drawable.Carrot,R.drawable.Cauliflower,R.drawable.pear};
+                R.drawable.Broccoli,R.drawable.Beans,R.drawable.pear,R.drawable.Pumpkin,R.drawable.Mushroom,R.drawable.Celery, R.drawable.Broccoli,R.drawable.egg,R.drawable.Carrot,R.drawable.Cauliflower,R.drawable.pear};
         GridView gridView=(GridView)this.findViewById(R.id.gridView);
         ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
         for(int i=0;i<icon.length;i++){
@@ -184,7 +183,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void addFridgeFreezer() {
-        TabHost tabHost = (TabHost) findViewById(R.id.tabHost3);
+        final TabHost tabHost = (TabHost) findViewById(R.id.tabHost3);
         tabHost.setup();
         tabHost.addTab(tabHost.newTabSpec("FridgeScrollView").setIndicator("Refrigerator")
                 .setContent(R.id.FridgeScrollView));
@@ -192,7 +191,7 @@ public class MainActivity extends ActionBarActivity {
         tabHost.addTab(tabHost.newTabSpec("FreezerScrollView").setIndicator("Freezer")
                 .setContent(R.id.FreezerScrollView));
 
-        TabWidget tabWidget = tabHost.getTabWidget();
+        final TabWidget tabWidget = tabHost.getTabWidget();
         for (int i = 0; i < tabWidget.getChildCount(); i++) {
             TextView tv = (TextView) tabWidget.getChildAt(i).findViewById(android.R.id.title);
             tv.setAllCaps(false);
@@ -208,6 +207,7 @@ public class MainActivity extends ActionBarActivity {
             tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
                 @Override
                 public void onTabChanged(String tabId) {
+
                     if (tabId == "FridgeScrollView") {
                         fridgeClicked = true;
                         freezerClicked = false;
@@ -235,15 +235,15 @@ public class MainActivity extends ActionBarActivity {
 
     public void getDatabaseResponse(){
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://52.10.237.82:8080/api/food";
+        String url = "http://52.11.25.130:8080/api/food";
 
         final JsonArrayRequest jsObjRequest = new JsonArrayRequest
                 (url,new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
                         try {
-                            ArrayList fridge_date= getFridgeDate(response);
-                            ArrayList freezer_date= getFreezerDate(response);
+                            Object[] fridge_date= getFridgeDate(response);
+                            Object[] freezer_date= getFreezerDate(response);
                             FridgeDisplay(fridge_date, response);
                             FreezerDisplay(freezer_date, response);
                         } catch (JSONException e) {
@@ -259,13 +259,13 @@ public class MainActivity extends ActionBarActivity {
         queue.add(jsObjRequest);
     }
 
-    public ArrayList getFridgeDate(JSONArray response) throws JSONException {
+    public Object[] getFridgeDate(JSONArray response) throws JSONException {
         ArrayList fridge_date=new ArrayList();
         int length=response.length();
         int exist=0;
-        for(int i=5;i<length;i++){
+        for(int i=0;i<length;i++){
             JSONObject jsonObject=(JSONObject)response.get(i);
-            String str=jsonObject.getString("add_time");
+            String str=jsonObject.getString("add_time").substring(0,10);
             String place=jsonObject.getString("store_place");
             if(place.equals("fridge")){
                 for(int j=0;j<fridge_date.size();j++){
@@ -279,17 +279,18 @@ public class MainActivity extends ActionBarActivity {
                 exist=0;
             }
         }
-        Arrays.sort(fridge_date.toArray());
-        return fridge_date;
+        Object[] fridge_date_array=fridge_date.toArray();
+        Arrays.sort( fridge_date_array);
+        return  fridge_date_array;
     }
 
-    public ArrayList getFreezerDate(JSONArray response) throws JSONException{
+    public Object[] getFreezerDate(JSONArray response) throws JSONException{
         ArrayList freezer_date=new ArrayList();
         int length=response.length();
         int exist=0;
-        for(int i=5;i<length;i++){
+        for(int i=0;i<length;i++){
             JSONObject jsonObject=(JSONObject)response.get(i);
-            String str=jsonObject.getString("add_time");
+            String str=jsonObject.getString("add_time").substring(0,10);
             String place=jsonObject.getString("store_place");
             if(place.equals("freezer")){
                 for(int j=0;j<freezer_date.size();j++){
@@ -303,20 +304,23 @@ public class MainActivity extends ActionBarActivity {
                 exist=0;
             }
         }
-        Arrays.sort(freezer_date.toArray());
-        return freezer_date;
+        Object[] freezer_date_array=freezer_date.toArray();
+        Arrays.sort(freezer_date_array);
+        return freezer_date_array;
     }
 
-    public void FridgeDisplay(ArrayList date, JSONArray response) throws JSONException {
-        for(int i=0;i<date.size();i++){
-            String date1=(String)date.get(i);
+    public void FridgeDisplay(Object[] date, JSONArray response) throws JSONException {
+
+        for(int i=0;i<date.length;i++){
+            String date1=String.valueOf(date[i]);
+            Log.d("Message: ",String.valueOf(date[i]));
             displayDateAndImage(date1, i,"fridge",response);
         }
     }
 
-    public void FreezerDisplay(ArrayList date, JSONArray response) throws JSONException {
-        for(int i=0;i<date.size();i++){
-            String date1=(String)date.get(i);
+    public void FreezerDisplay(Object[] date, JSONArray response) throws JSONException {
+        for(int i=0;i<date.length;i++){
+            String date1=(String)date[i];
             displayDateAndImage(date1, i,"freezer",response);
         }
     }
@@ -352,42 +356,48 @@ public class MainActivity extends ActionBarActivity {
 
         // Add gridlayout
         int margin_top_grid=number*400+80;
-        GridLayout gridLayout=new GridLayout(this);
+        final GridLayout gridLayout=new GridLayout(this);
         gridLayout.setColumnCount(4);
         RelativeLayout.LayoutParams grid_param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,320);
         grid_param.setMargins(0,margin_top_grid,0,0);
         gridLayout.setLayoutParams(grid_param);
         relativeLayout1.addView(gridLayout);
-
+        Log.d("iden","1");
         //   Add image on gridlayout
-        for(int i=5;i<response.length();i++){
+        for(int i=0;i<response.length();i++){
             JSONObject jsonObject=(JSONObject)response.get(i);
-            String food_date=jsonObject.getString("add_time");
+            String food_date=jsonObject.getString("add_time").substring(0,10);
             String store_place=jsonObject.getString("store_place");
+
             if(food_date.equals(date) && store_place.equals(place)){
                 final String id=jsonObject.getString("_id");
                 final String foodname=jsonObject.getString("foodname");
-                int identefier=Integer.valueOf(jsonObject.getString("image_id"));
                 final String quality_period=jsonObject.getString("expire_period");
-                ImageButton imageButton=new ImageButton(this);
-                imageButton.setImageResource(identefier);
-
+                final String add_time=jsonObject.getString("add_time");
+                final ImageButton imageButton=new ImageButton(this);
+                int identifier = getResources().getIdentifier(foodname, "drawable","com.example.mobileapp.fresh");
+                imageButton.setImageResource(identifier);
+                gridLayout.addView(imageButton);
+                GridLayout.LayoutParams layoutParams1=(GridLayout.LayoutParams)imageButton.getLayoutParams();
+                layoutParams1.width=170;
+                layoutParams1.height=150;
+                imageButton.setLayoutParams(layoutParams1);
                 imageButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         LayoutInflater inflater = getLayoutInflater();
-                        final View layout = inflater.inflate(R.layout.food_information_layout, (ViewGroup) findViewById(R.id.foodInformation));
+                        final View layout = inflater.inflate(R.layout.food_information_layout_main, (ViewGroup) findViewById(R.id.foodInformation));
 
                         TextView textView = (TextView) layout.findViewById(R.id.foodName);
                         textView.setText(foodname);
 
-                        TextView textView2 = (TextView) layout.findViewById(R.id.qualityPeriod);
-                        textView2.setText(quality_period);
-
                         TextView textView3=(TextView)layout.findViewById(R.id.bestBefore);
                         try {
-                            String bestBefore=calculateDate(quality_period);
-                            textView3.setText(bestBefore);
+                             String bestBefore=calculateDate(add_time,quality_period);
+                             textView3.setText(bestBefore);
+                            TextView textView2 = (TextView) layout.findViewById(R.id.DaysLeft);
+                            int daysLeft=calDateDifference(bestBefore,getTime());
+                            textView2.setText(String.valueOf(daysLeft));
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
@@ -397,17 +407,13 @@ public class MainActivity extends ActionBarActivity {
                                 .setNegativeButton("Delete", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
+                                        gridLayout.removeView(imageButton);
                                         RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
-                                        String url = "http://52.10.237.82:8080/api/food";
-                                        JSONObject obj = new JSONObject();
-                                        try {
-                                            obj.put("food_id",id);
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
+                                        String url = "http://52.11.25.130:8080/api/food/food_id/";
+                                        url = url + id;
 
                                         JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                                                (Request.Method.DELETE, url, obj, new Response.Listener<JSONObject>() {
+                                                (Request.Method.DELETE, url, new JSONObject(), new Response.Listener<JSONObject>() {
                                                     @Override
                                                     public void onResponse(JSONObject response) {
                                                         Log.d("Message: ", "1");
@@ -415,7 +421,7 @@ public class MainActivity extends ActionBarActivity {
                                                 }, new Response.ErrorListener() {
                                                     @Override
                                                     public void onErrorResponse(VolleyError error) {
-                                                        Log.d("Message: ", error.getMessage());
+                                                        Log.d("Message: ", "Delete Failed");
                                                     }
                                                 });
                                         queue.add(jsObjRequest);
@@ -423,32 +429,41 @@ public class MainActivity extends ActionBarActivity {
                                 }).show();
                     }
                 });
-                gridLayout.addView(imageButton);
              }
         }
     }
 
-    public String calculateDate(String period) throws ParseException {
-        String dateInString = this.getTime();
+    public String calculateDate(String add_time, String expire_period) throws ParseException {
+        String dateInString = add_time;
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 
         Calendar c = Calendar.getInstance(); // Get Calendar Instance
         c.setTime(sdf.parse(dateInString));
 
-        c.add(Calendar.DATE, Integer.parseInt(period));  // add 45 days
+        c.add(Calendar.DATE, Integer.parseInt(expire_period));  // add 45 days
 
         Date resultdate = new Date(c.getTimeInMillis());   // Get new time
         dateInString = sdf.format(resultdate);
-        Log.d("Message: ",dateInString);
         return dateInString;
     }
+
+    public int calDateDifference(String end,String from) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Calendar end_date = Calendar.getInstance(); // Get Calendar Instance
+        end_date.setTime(sdf.parse(end));
+
+        Calendar from_date = Calendar.getInstance(); // Get Calendar Instance
+        from_date.setTime(sdf.parse(from));
+        return (int)(end_date.getTime().getTime()-from_date.getTime().getTime())/ (1000 * 60 * 60 * 24);
+    }
+
 
     public void sendNotification(){
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.beans)
-                        .setContentTitle("Warning")
-                        .setContentText("Hello World!");
+                        .setSmallIcon(R.drawable.minute_maid)
+                        .setContentTitle("Alert")
+                        .setContentText("CITRUS PUNCH Minute Maid expired");
         NotificationManager nm= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         nm.notify(1,mBuilder.build());
     }
