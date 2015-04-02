@@ -6,6 +6,9 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -53,12 +56,15 @@ import java.util.Date;
 public class MainActivity extends ActionBarActivity {
     boolean fridgeClicked = true;
     boolean freezerClicked = false;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+     //   Intent intent=new Intent(this,LoginActivity.class);
+     //   startActivity(intent);
         getIntent();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        new SQLiteDB(this);
 
       //  TextView textView2 = (TextView) findViewById(R.id.textView2);
     //    textView2.setText(getTime());
@@ -362,7 +368,6 @@ public class MainActivity extends ActionBarActivity {
         grid_param.setMargins(0,margin_top_grid,0,0);
         gridLayout.setLayoutParams(grid_param);
         relativeLayout1.addView(gridLayout);
-        Log.d("iden","1");
         //   Add image on gridlayout
         for(int i=0;i<response.length();i++){
             JSONObject jsonObject=(JSONObject)response.get(i);

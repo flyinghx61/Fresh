@@ -454,7 +454,8 @@ public class AddItemActivity extends ActionBarActivity {
 
     public void addMostlyAdded(){
         int added_number=0;
-        SQLiteDatabase mSQLiteDatabase=this.openOrCreateDatabase("QualityPeriod",MODE_PRIVATE,null);
+        SQLiteDB sqLiteDatabase=new SQLiteDB(this);
+        SQLiteDatabase mSQLiteDatabase=sqLiteDatabase.getWritableDatabase();
         Cursor mcursor=mSQLiteDatabase.query("QualityPeriod", new String[]{"name","day","times"},null,
                 null, null, null, null);
         mcursor.moveToFirst();
