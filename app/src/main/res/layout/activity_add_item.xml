@@ -17,7 +17,7 @@
             android:id="@+id/topGreenBar"
             android:layout_marginTop="0dp"
             android:layout_width="fill_parent"
-            android:layout_height="50dp"
+            android:layout_height="45dp"
             android:background="#B9CB41"></FrameLayout>
 
         <TabHost
@@ -33,18 +33,15 @@
             <TabWidget
                 android:id="@android:id/tabs"
                 android:layout_width="match_parent"
-                android:layout_height="40dp"
-                android:layout_marginTop="5dp"
+                android:layout_height="45dp"
                 android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:background="@drawable/buttonstylegreen"></TabWidget>
+                android:layout_marginRight="10dp"></TabWidget>
 
 
             <FrameLayout
                     android:layout_width="fill_parent"
                     android:layout_height="40dp"
-                    android:layout_marginTop="5dp"
-                    android:background="#3a210404"
+                android:background="#3a210404"
                     android:id="@+id/Date">
 
                     <TextView
@@ -154,7 +151,7 @@
         <RelativeLayout
             android:id="@+id/red_rectan"
             android:layout_width="fill_parent"
-            android:layout_height="90dp"
+            android:layout_height="80dp"
             android:layout_marginTop="0dp"
             android:background="#F15A59">
 
@@ -167,7 +164,7 @@
                 android:textSize="18dp"
                 android:layout_alignParentTop="true"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="10dp" />
+                android:layout_marginTop="15dp" />
 
         </RelativeLayout>
 
@@ -186,8 +183,7 @@
                     android:id="@android:id/tabs"
                     android:layout_width="fill_parent"
                     android:layout_height="40dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/buttonstylered"></TabWidget>
+                    android:layout_marginTop="10dp"></TabWidget>
 
                 <FrameLayout
                     android:id="@android:id/tabcontent"

@@ -1,6 +1,7 @@
 package com.example.mobileapp.fresh;
 
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.content.Context;
@@ -9,8 +10,12 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 import android.support.v7.app.ActionBarActivity;
@@ -65,7 +70,8 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         new SQLiteDB(this);
-
+        Time time=new Time();
+        time.execute();
       //  TextView textView2 = (TextView) findViewById(R.id.textView2);
     //    textView2.setText(getTime());
 
@@ -144,7 +150,7 @@ public class MainActivity extends ActionBarActivity {
         addFridgeFreezer();
         getDatabaseResponse();
 
-       sendNotification();
+
 
         // int identifier = getResources().getIdentifier("Beans", "drawable","com.example.mobileapp.fresh");
       //  ImageButton imageButton2=(ImageButton)this.findViewById(R.id.imageButton);
@@ -187,6 +193,8 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+
 
     public void addFridgeFreezer() {
         final TabHost tabHost = (TabHost) findViewById(R.id.tabHost3);
@@ -319,7 +327,6 @@ public class MainActivity extends ActionBarActivity {
 
         for(int i=0;i<date.length;i++){
             String date1=String.valueOf(date[i]);
-            Log.d("Message: ",String.valueOf(date[i]));
             displayDateAndImage(date1, i,"fridge",response);
         }
     }
@@ -462,15 +469,69 @@ public class MainActivity extends ActionBarActivity {
         return (int)(end_date.getTime().getTime()-from_date.getTime().getTime())/ (1000 * 60 * 60 * 24);
     }
 
+    private class Time extends AsyncTask {
+        @Override
+        protected Object doInBackground(Object[] params) {
+            String time = MainActivity.this.getTime();
+            sendNotification();
+            return null;
+        }
 
-    public void sendNotification(){
-        NotificationCompat.Builder mBuilder =
-                new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.minute_maid)
-                        .setContentTitle("Alert")
-                        .setContentText("CITRUS PUNCH Minute Maid expired");
-        NotificationManager nm= (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-        nm.notify(1,mBuilder.build());
+        public void sendNotification() {
+            RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
+            String url = "http://52.11.25.130:8080/api/food";
+
+            final JsonArrayRequest jsObjRequest = new JsonArrayRequest
+                    (url,new Response.Listener<JSONArray>() {
+                        @Override
+                        public void onResponse(JSONArray response) {
+                           for(int i=0;i<response.length();i++) {
+                               try {
+                                   int NOTIFICATION_ID = (int)(Math.random()*10000);
+                                   JSONObject jsonObject=(JSONObject)response.get(i);
+                                   String foodname=jsonObject.getString("foodname");
+                                   String add_time=jsonObject.getString("add_time");
+                                   String quality_period=jsonObject.getString("expire_period");
+                                   String bestBefore=MainActivity.this.calculateDate(add_time, quality_period);
+                                   int daysLeft=calDateDifference(bestBefore,getTime());
+                                   Log.d("left",String.valueOf(daysLeft));
+                                   if(daysLeft >= 0 && daysLeft < 3){
+                                       NotificationCompat.Builder mBuilder =
+                                               new NotificationCompat.Builder(MainActivity.this)
+                                                       .setSmallIcon(MainActivity.this.getResources().getIdentifier(foodname, "drawable","com.example.mobileapp.fresh"))
+                                                       .setContentTitle("Alert: "+foodname+" Nearly Expire !")
+                                                       .setContentText( foodname+" will expired in "+String.valueOf(daysLeft)+" days !");
+                                       NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                                       nm.notify(NOTIFICATION_ID, mBuilder.build());
+                                   }
+                                   if(daysLeft<0){
+                                       NotificationCompat.Builder mBuilder =
+                                               new NotificationCompat.Builder(MainActivity.this)
+                                                       .setSmallIcon(MainActivity.this.getResources().getIdentifier(foodname, "drawable","com.example.mobileapp.fresh"))
+                                                       .setContentTitle("Caution: "+foodname+" Expired !!")
+                                                       .setContentText( foodname+" has expired for "+String.valueOf(-daysLeft)+" days !");
+                                       NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                                       nm.notify(NOTIFICATION_ID, mBuilder.build());
+                                   }
+                               } catch (JSONException e) {
+                                   e.printStackTrace();
+                               } catch (ParseException e) {
+                                   e.printStackTrace();
+                               }
+                           }
+                        }
+                    }, new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    });
+            queue.add(jsObjRequest);
+        }
     }
 
 }
+
+
+
+

@@ -10,7 +10,7 @@
         android:id="@+id/frameLayout"
         android:layout_marginTop="0dp"
         android:layout_width="fill_parent"
-        android:layout_height="55dp"
+        android:layout_height="45dp"
         android:background="#B9CB41" />
 
     <TabHost
@@ -27,7 +27,6 @@
                 android:id="@android:id/tabs"
                 android:layout_width="fill_parent"
                 android:layout_height="40dp"
-                android:background="@drawable/buttonstylegreen"
                 android:layout_marginTop="5dp"
                 android:tabStripEnabled="false"></TabWidget>
 
