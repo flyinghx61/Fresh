@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -387,7 +388,15 @@ public class MainActivity extends ActionBarActivity {
                 final String quality_period=jsonObject.getString("expire_period");
                 final String add_time=jsonObject.getString("add_time");
                 final ImageButton imageButton=new ImageButton(this);
-                int identifier = getResources().getIdentifier(foodname, "drawable","com.example.mobileapp.fresh");
+                int identifier=0;
+                switch(foodname){
+                    case "ice cream": identifier = getResources().getIdentifier("ice_cream", "drawable", "com.example.mobileapp.fresh");break;
+                    case "frozen pizza": identifier = getResources().getIdentifier("frozen_pizza", "drawable", "com.example.mobileapp.fresh");break;
+                    case "iced tea": identifier = getResources().getIdentifier("iced_tea", "drawable", "com.example.mobileapp.fresh");break;
+                    case "cheese slice": identifier = getResources().getIdentifier("cheese_slice", "drawable", "com.example.mobileapp.fresh");break;
+                    default: identifier = getResources().getIdentifier(foodname, "drawable", "com.example.mobileapp.fresh");
+                }
+
                 imageButton.setImageResource(identifier);
                 gridLayout.addView(imageButton);
                 GridLayout.LayoutParams layoutParams1=(GridLayout.LayoutParams)imageButton.getLayoutParams();
@@ -480,7 +489,8 @@ public class MainActivity extends ActionBarActivity {
         public void sendNotification() {
             RequestQueue queue = Volley.newRequestQueue(MainActivity.this);
             String url = "http://52.11.25.130:8080/api/food";
-
+            final Intent intent = new Intent(MainActivity.this, MainActivity.class);
+            final MainActivity mainActivity=MainActivity.this;
             final JsonArrayRequest jsObjRequest = new JsonArrayRequest
                     (url,new Response.Listener<JSONArray>() {
                         @Override
@@ -498,9 +508,17 @@ public class MainActivity extends ActionBarActivity {
                                    if(daysLeft >= 0 && daysLeft < 3){
                                        NotificationCompat.Builder mBuilder =
                                                new NotificationCompat.Builder(MainActivity.this)
-                                                       .setSmallIcon(MainActivity.this.getResources().getIdentifier(foodname, "drawable","com.example.mobileapp.fresh"))
-                                                       .setContentTitle("Alert: "+foodname+" Nearly Expire !")
-                                                       .setContentText( foodname+" will expired in "+String.valueOf(daysLeft)+" days !");
+                                                               .setContentIntent(PendingIntent.getActivity(mainActivity, 0, intent, PendingIntent.FLAG_ONE_SHOT))
+                                                               .setContentTitle("Alert: " + foodname + " Nearly Expire !")
+                                                               .setContentText(foodname + " will expired in " + String.valueOf(daysLeft) + " days !");
+                                       switch(foodname){
+                                           case "ice cream": mBuilder.setSmallIcon(MainActivity.this.getResources().getIdentifier("ice_cream", "drawable", "com.example.mobileapp.fresh"));break;
+                                           case "frozen pizza":  mBuilder.setSmallIcon(MainActivity.this.getResources().getIdentifier("frozen_pizza", "drawable", "com.example.mobileapp.fresh"));break;
+                                           case "iced tea":  mBuilder.setSmallIcon(MainActivity.this.getResources().getIdentifier("iced_tea", "drawable", "com.example.mobileapp.fresh"));break;
+                                           case "cheese slice":  mBuilder.setSmallIcon(MainActivity.this.getResources().getIdentifier("cheese_slice", "drawable", "com.example.mobileapp.fresh"));break;
+                                           default:  mBuilder.setSmallIcon(MainActivity.this.getResources().getIdentifier(foodname, "drawable", "com.example.mobileapp.fresh"));
+                                       }
+
                                        NotificationManager nm = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                                        nm.notify(NOTIFICATION_ID, mBuilder.build());
                                    }

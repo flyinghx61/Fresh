@@ -239,6 +239,7 @@
                                     android:layout_height="330dp"
                                     android:layout_marginTop="10dp">
 
+
                                     <GridLayout
                                         android:id="@+id/tab1"
                                         android:layout_width="fill_parent"
@@ -471,7 +472,8 @@
                                             android:tag="@string/apple"
                                             android:layout_marginLeft="20dp"
                                             android:layout_marginRight="0dp"
-                                            android:onClick="show_dialog" />
+                                            android:onClick="show_dialog"
+                                            android:adjustViewBounds="false" />
 
                                         <ImageButton
                                             android:layout_width="70dp"
@@ -491,8 +493,45 @@
                                     android:layout_width="fill_parent"
                                     android:layout_height="fill_parent"
                                     android:orientation="vertical"
-                                        android:columnCount="4"
-                                        android:rowCount="4"></GridLayout>
+                                    android:columnCount="4"
+                                    android:rowCount="4">
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/crab"
+                                            android:layout_row="0"
+                                            android:layout_column="0"
+                                            android:src="@drawable/crab"
+                                            android:tag="@string/crab"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/ham"
+                                            android:layout_row="0"
+                                            android:layout_column="1"
+                                            android:src="@drawable/ham"
+                                            android:tag="@string/ham"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/hotdog"
+                                            android:layout_row="0"
+                                            android:layout_column="2"
+                                            android:src="@drawable/hotdog"
+                                            android:tag="@string/hotdog"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+                                        </GridLayout>
 
                                     <GridLayout
                                         android:id="@+id/tab4"
@@ -531,9 +570,44 @@
                                             android:layout_height="60dp"
                                             android:id="@+id/cupcake"
                                             android:layout_row="0"
-                                            android:layout_column="1"
+                                            android:layout_column="2"
                                             android:src="@drawable/cupcake"
                                             android:tag="@string/cupcake"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/cake"
+                                            android:layout_row="0"
+                                            android:layout_column="3"
+                                            android:src="@drawable/cake"
+                                            android:tag="@string/cake"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/donuts"
+                                            android:layout_row="1"
+                                            android:layout_column="0"
+                                            android:src="@drawable/donuts"
+                                            android:tag="@string/donuts"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/frozen_pizza"
+                                            android:layout_row="1"
+                                            android:layout_column="1"
+                                            android:src="@drawable/frozen_pizza"
+                                            android:tag="@string/frozen_pizza"
                                             android:layout_marginLeft="20dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
@@ -570,6 +644,66 @@
                                             android:layout_marginLeft="20dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/butter"
+                                            android:layout_row="0"
+                                            android:layout_column="2"
+                                            android:src="@drawable/butter"
+                                            android:tag="@string/butter"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/cheese_slice"
+                                            android:layout_row="0"
+                                            android:layout_column="3"
+                                            android:src="@drawable/cheese_slice"
+                                            android:tag="@string/cheese_slice"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/cheese"
+                                            android:layout_row="1"
+                                            android:layout_column="0"
+                                            android:src="@drawable/cheese"
+                                            android:tag="@string/cheese"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/cream"
+                                            android:layout_row="1"
+                                            android:layout_column="1"
+                                            android:src="@drawable/cream"
+                                            android:tag="@string/cream"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/ice_cream"
+                                            android:layout_row="1"
+                                            android:layout_column="2"
+                                            android:src="@drawable/ice_cream"
+                                            android:tag="@string/ice_cream"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
                                     </GridLayout>
 
                                     <GridLayout
@@ -578,7 +712,34 @@
                                         android:layout_height="fill_parent"
                                         android:orientation="vertical"
                                         android:columnCount="4"
-                                        android:rowCount="4"></GridLayout>
+                                        android:rowCount="4">
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/coffee"
+                                            android:layout_row="0"
+                                            android:layout_column="0"
+                                            android:src="@drawable/coffee"
+                                            android:tag="@string/coffee"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/iced_tea"
+                                            android:layout_row="0"
+                                            android:layout_column="1"
+                                            android:src="@drawable/iced_tea"
+                                            android:tag="@string/iced_tea"
+                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+                                    </GridLayout>
+
+
                                 </FrameLayout>
                             </LinearLayout>
                         </TabHost>

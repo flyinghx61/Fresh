@@ -38,8 +38,7 @@
                 <ScrollView
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
-                    android:id="@+id/FridgeScrollView"
-                    android:layout_marginTop="10dp" >
+                    android:id="@+id/FridgeScrollView">
 
                     <RelativeLayout
                         android:layout_width="fill_parent"
@@ -50,8 +49,7 @@
                 <ScrollView
                     android:layout_width="fill_parent"
                     android:layout_height="509dp"
-                    android:id="@+id/FreezerScrollView"
-                    android:layout_marginTop="10dp">
+                    android:id="@+id/FreezerScrollView">
 
                     <RelativeLayout
                         android:layout_width="fill_parent"

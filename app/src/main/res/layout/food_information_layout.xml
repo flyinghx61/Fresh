@@ -16,36 +16,13 @@
         android:layout_marginLeft="10dp" />
 
     <TextView
-        android:layout_width="100dp"
+        android:layout_width="200dp"
         android:layout_height="50dp"
         android:id="@+id/foodName"
         android:text=""
         android:textSize="20dp"
         android:layout_alignTop="@+id/textView4"
-        android:layout_alignRight="@+id/textView8"
-        android:layout_marginRight="36dp"
-        android:layout_marginEnd="36dp" />
-
-    <TextView
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:text="Category:"
-        android:id="@+id/textView5"
-        android:textSize="20dp"
-        android:layout_below="@+id/textView4"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginLeft="10dp" />
-
-    <TextView
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        android:text="Vegetable"
-        android:id="@+id/textView8"
-        android:textSize="20dp"
-        android:layout_below="@+id/textView4"
-        android:layout_toRightOf="@+id/textView4"
-        android:layout_toEndOf="@+id/textView4" />
+        android:layout_marginLeft="70dp" />
 
     <TextView
         android:layout_width="230dp"
@@ -53,10 +30,10 @@
         android:text="Quality guarantee period:"
         android:id="@+id/textView6"
         android:textSize="20dp"
-        android:layout_below="@+id/textView5"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginLeft="10dp" />
+        android:layout_marginLeft="10dp"
+        android:layout_below="@+id/textView4" />
 
     <EditText
         android:layout_width="100dp"

@@ -7,14 +7,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.gesture.GestureOverlayView;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -25,6 +28,7 @@ import android.widget.RelativeLayout;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
+import android.widget.ViewFlipper;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -67,6 +71,8 @@ public class AddItemActivity extends ActionBarActivity {
         addTwoTab();
         addMostlyAdded();
     }
+
+
 
 //    @Override
 //    public boolean onCreateOptionsMenu(Menu menu) {
@@ -487,8 +493,14 @@ public class AddItemActivity extends ActionBarActivity {
                     break;
                 }
                 String foodname=mcursor.getString(0);
-
-                int identifier = getResources().getIdentifier(foodname, "drawable","com.example.mobileapp.fresh");
+                int identifier=0;
+                switch(foodname){
+                    case "ice cream": identifier = getResources().getIdentifier("ice_cream", "drawable", "com.example.mobileapp.fresh");break;
+                    case "frozen pizza": identifier = getResources().getIdentifier("frozen_pizza", "drawable", "com.example.mobileapp.fresh");break;
+                    case "iced tea": identifier = getResources().getIdentifier("iced_tea", "drawable", "com.example.mobileapp.fresh");break;
+                    case "cheese slice": identifier = getResources().getIdentifier("cheese_slice", "drawable", "com.example.mobileapp.fresh");break;
+                    default: identifier = getResources().getIdentifier(foodname, "drawable", "com.example.mobileapp.fresh");
+                }
 
                 ImageButton imageButton=new ImageButton(this);
                 imageButton.setImageResource(identifier);
@@ -511,5 +523,6 @@ public class AddItemActivity extends ActionBarActivity {
         }
         mSQLiteDatabase.close();
     }
-}
+
+    }
 

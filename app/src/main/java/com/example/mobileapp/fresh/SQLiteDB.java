@@ -52,6 +52,19 @@ public class SQLiteDB extends SQLiteOpenHelper {
             db.execSQL("INSERT INTO QualityPeriod (name, day, times) values ('potatoes', '8', '-1')");
             db.execSQL("INSERT INTO QualityPeriod (name, day, times) values ('pumpkin', '11', '-1')");
             db.execSQL("INSERT INTO QualityPeriod (name, day, times) values ('tomato', '8', '-3')");
+            db.execSQL("INSERT INTO QualityPeriod (name, day, times) values ('frozen pizza', '8', '-2')");
+            db.execSQL("INSERT INTO QualityPeriod (name, day, times) values ('ham', '5', '-4')");
+            db.execSQL("INSERT INTO QualityPeriod (name, day, times) values ('hotdog', '2', '-5')");
+            db.execSQL("INSERT INTO QualityPeriod (name, day, times) values ('ice cream', '7', '-5')");
+            db.execSQL("INSERT INTO QualityPeriod (name, day, times) values ('iced tea', '8', '-1')");
+            db.execSQL("INSERT INTO QualityPeriod (name, day, times) values ('butter', '8', '-6')");
+            db.execSQL("INSERT INTO QualityPeriod (name, day, times) values ('cake', '3', '-6')");
+            db.execSQL("INSERT INTO QualityPeriod (name, day, times) values ('cheese slice', '5', '-1')");
+            db.execSQL("INSERT INTO QualityPeriod (name, day, times) values ('cheese', '6', '0')");
+            db.execSQL("INSERT INTO QualityPeriod (name, day, times) values ('coffee', '3', '-6')");
+            db.execSQL("INSERT INTO QualityPeriod (name, day, times) values ('crab', '3', '-1')");
+            db.execSQL("INSERT INTO QualityPeriod (name, day, times) values ('cream', '4', '0')");
+            db.execSQL("INSERT INTO QualityPeriod (name, day, times) values ('donuts', '3', '-1')");
         }
 
     }

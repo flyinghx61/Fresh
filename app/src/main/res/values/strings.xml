@@ -30,6 +30,19 @@
     <string name="milk">milk</string>
     <string name="egg">egg</string>
     <string name="cupcake">cupcake</string>
+    <string name="butter">butter</string>
+    <string name="cake">cake</string>
+    <string name="cheese_slice">cheese slice</string>
+    <string name="cheese">cheese</string>
+    <string name="coffee">coffee</string>
+    <string name="crab">crab</string>
+    <string name="cream">cream</string>
+    <string name="donuts">donuts</string>
+    <string name="frozen_pizza">frozen pizza</string>
+    <string name="ham">ham</string>
+    <string name="hotdog">hotdog</string>
+    <string name="ice_cream">ice cream</string>
+    <string name="iced_tea">iced tea</string>
     <string-array name="filter_array">
         <item>Date added</item>
         <item>Expire date</item>
