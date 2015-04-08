@@ -107,7 +107,7 @@ public class MainActivity extends ActionBarActivity {
       //  Log.d("score", "Retrieved " + score + " scores");
 
         addActionbar();
-        addSpinner();
+        //addSpinner();
         addFridgeFreezer();
         getDatabaseResponse();
 
@@ -174,7 +174,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-    public void addSpinner() {
+   /* public void addSpinner() {
         Spinner filterSpinner = (Spinner) findViewById(R.id.main_filter_spinner);
 
         ArrayAdapter<CharSequence> filterAdapter = ArrayAdapter.createFromResource(
@@ -205,7 +205,7 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
-    }
+    }*/
 
 
 
@@ -506,12 +506,9 @@ public class MainActivity extends ActionBarActivity {
             cursor.moveToFirst();
             String alertTime = cursor.getString(1);
 
-
             SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
             String currentTime = sdf.format(new Date());
             sqLiteDatabase.close();
-
-
 
             while (!alertTime.equals(currentTime)) {
                 try {
@@ -607,7 +604,7 @@ public class MainActivity extends ActionBarActivity {
                 null, null, null, null);
         cursor.moveToFirst();
         String alertTime = cursor.getString(1);
-        Log.d("Message", alertTime);
+        Log.d("Alert： ", alertTime);
         SimpleDateFormat df = new SimpleDateFormat("HH:mm");
         try {
             Date currentDate = df.parse(alertTime);
@@ -620,7 +617,7 @@ public class MainActivity extends ActionBarActivity {
 
         String currentHour = alertTime.substring(0,2);
         String currentMin = alertTime.substring(3,5);
-        Log.d("Message", currentHour + ":" + currentMin);
+        Log.d("Alert：", currentHour + ":" + currentMin);
 
 
         TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
