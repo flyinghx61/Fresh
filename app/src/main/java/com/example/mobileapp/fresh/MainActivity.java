@@ -498,8 +498,40 @@ public class MainActivity extends ActionBarActivity {
     private class Time extends AsyncTask {
         @Override
         protected Object doInBackground(Object[] params) {
-            String time = MainActivity.this.getTime();
+            SQLiteDBSetting sqLiteDBSetting = new SQLiteDBSetting(MainActivity.this);
+            SQLiteDatabase sqLiteDatabase = sqLiteDBSetting.getWritableDatabase();
+
+            Cursor cursor = sqLiteDatabase.query("Setting", new String[] {"function", "state"}, "function=?",
+                    new String[] {"alertTime"}, null, null, null);
+            cursor.moveToFirst();
+            String alertTime = cursor.getString(1);
+
+
+            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+            String currentTime = sdf.format(new Date());
+            sqLiteDatabase.close();
+
+
+
+            while (!alertTime.equals(currentTime)) {
+                try {
+                    Thread.sleep(3000);
+                    currentTime = sdf.format(new Date());
+                    sqLiteDatabase = openOrCreateDatabase("Setting",MODE_PRIVATE,null);
+                    cursor = sqLiteDatabase.query("Setting", new String[] {"function", "state"}, "function=?",
+                            new String[] {"alertTime"}, null, null, null);
+                    cursor.moveToFirst();
+                    alertTime = cursor.getString(1);
+                    sqLiteDatabase.close();
+                    Log.d("message", "updating" + currentTime + " alerttime is" + alertTime);
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
             sendNotification();
+
+            Log.d("Message: ", "time execute!!!sendNotification");
             return null;
         }
 
