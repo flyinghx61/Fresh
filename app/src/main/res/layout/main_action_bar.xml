@@ -11,13 +11,16 @@
         <!--android:layout_gravity="left"-->
         <!--android:background="@drawable/mainfilterbutton"/>-->
 
-    <Spinner
-        android:id="@+id/main_filter_spinner"
+    <Button
+        android:id="@+id/alarmButton"
         android:layout_marginTop="8dp"
-        android:layout_marginLeft="1dp"
-        android:layout_width="wrap_content"
-        android:layout_height="40dp"
-        android:layout_gravity="left"/>
+        android:layout_marginRight="10dp"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_gravity="left"
+        android:background="@drawable/alarm1"
+        android:clickable="true"
+        android:onClick="alertSetting"/>
 
 
     <TextView

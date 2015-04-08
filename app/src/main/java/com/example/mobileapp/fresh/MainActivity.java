@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.TimePickerDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -38,6 +39,7 @@ import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -104,8 +106,60 @@ public class MainActivity extends ActionBarActivity {
        // String score = defaultObj.getString("type");
       //  Log.d("score", "Retrieved " + score + " scores");
 
+        addActionbar();
+        addSpinner();
+        addFridgeFreezer();
+        getDatabaseResponse();
+
+
+
+        // int identifier = getResources().getIdentifier("Beans", "drawable","com.example.mobileapp.fresh");
+      //  ImageButton imageButton2=(ImageButton)this.findViewById(R.id.imageButton);
+      //  imageButton2.setImageResource(identifier);
+
+     /*   int[] icon = { R.drawable.apple,R.drawable.Bellpepper,R.drawable.bread,
+                R.drawable.Broccoli,R.drawable.Beans,R.drawable.pear,R.drawable.Pumpkin,R.drawable.Mushroom,R.drawable.Celery, R.drawable.Broccoli,R.drawable.egg,R.drawable.Carrot,R.drawable.Cauliflower,R.drawable.pear};
+        GridView gridView=(GridView)this.findViewById(R.id.gridView);
+        ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
+        for(int i=0;i<icon.length;i++){
+            HashMap<String, Object> map = new HashMap<String, Object>();
+            map.put("ItemImage", icon[i]);
+            lstImageItem.add(map);
+        }
+
+        SimpleAdapter adapter = new SimpleAdapter(this, lstImageItem,R.layout.sample_image_view,
+                                         new String[] {"ItemImage"}, new int[]{R.id.imageView});
+        gridView.setAdapter(adapter);*/
+    }
+
+
+//
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        // Inflate the menu; this adds items to the action bar if it is present.
+//        getMenuInflater().inflate(R.menu.menu_main, menu);
+//        return true;
+//    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    public void addActionbar() {
         android.support.v7.app.ActionBar.LayoutParams lp =new android.support.v7.app.ActionBar.LayoutParams( ActionBar.LayoutParams.MATCH_PARENT,
-           ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
+                ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
         View viewTitleBar = getLayoutInflater().inflate(R.layout.main_action_bar, null);
         android.support.v7.app.ActionBar actionBar=this.getSupportActionBar();
         actionBar.setCustomView(viewTitleBar,lp);
@@ -117,7 +171,10 @@ public class MainActivity extends ActionBarActivity {
         ColorDrawable colorDrawable = new ColorDrawable(Color.parseColor("#B9CB41"));
         actionBar.setBackgroundDrawable(colorDrawable);
         //actionBar.setTitle("                             Fresh");
+    }
 
+
+    public void addSpinner() {
         Spinner filterSpinner = (Spinner) findViewById(R.id.main_filter_spinner);
 
         ArrayAdapter<CharSequence> filterAdapter = ArrayAdapter.createFromResource(
@@ -148,52 +205,6 @@ public class MainActivity extends ActionBarActivity {
 
             }
         });
-
-        addFridgeFreezer();
-        getDatabaseResponse();
-
-
-
-        // int identifier = getResources().getIdentifier("Beans", "drawable","com.example.mobileapp.fresh");
-      //  ImageButton imageButton2=(ImageButton)this.findViewById(R.id.imageButton);
-      //  imageButton2.setImageResource(identifier);
-
-     /*   int[] icon = { R.drawable.apple,R.drawable.Bellpepper,R.drawable.bread,
-                R.drawable.Broccoli,R.drawable.Beans,R.drawable.pear,R.drawable.Pumpkin,R.drawable.Mushroom,R.drawable.Celery, R.drawable.Broccoli,R.drawable.egg,R.drawable.Carrot,R.drawable.Cauliflower,R.drawable.pear};
-        GridView gridView=(GridView)this.findViewById(R.id.gridView);
-        ArrayList<HashMap<String, Object>> lstImageItem = new ArrayList<HashMap<String, Object>>();
-        for(int i=0;i<icon.length;i++){
-            HashMap<String, Object> map = new HashMap<String, Object>();
-            map.put("ItemImage", icon[i]);
-            lstImageItem.add(map);
-        }
-
-        SimpleAdapter adapter = new SimpleAdapter(this, lstImageItem,R.layout.sample_image_view,
-                                         new String[] {"ItemImage"}, new int[]{R.id.imageView});
-        gridView.setAdapter(adapter);*/
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
 
@@ -553,6 +564,48 @@ public class MainActivity extends ActionBarActivity {
                     });
             queue.add(jsObjRequest);
         }
+    }
+
+
+    public void alertSetting(View view) {
+        SQLiteDBSetting sqLiteDBSetting = new SQLiteDBSetting(this);
+        SQLiteDatabase sqLiteDatabase = sqLiteDBSetting.getWritableDatabase();
+
+        Cursor cursor = sqLiteDatabase.query("Setting", new String[] {"function", "state"}, null,
+                null, null, null, null);
+        cursor.moveToFirst();
+        String alertTime = cursor.getString(1);
+        Log.d("Message", alertTime);
+        SimpleDateFormat df = new SimpleDateFormat("HH:mm");
+        try {
+            Date currentDate = df.parse(alertTime);
+            SimpleDateFormat sdf = new SimpleDateFormat("hh:mm aa");
+            String alerttime = sdf.format(currentDate);
+            Log.d("Message", alerttime);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String currentHour = alertTime.substring(0,2);
+        String currentMin = alertTime.substring(3,5);
+        Log.d("Message", currentHour + ":" + currentMin);
+
+
+        TimePickerDialog timePickerDialog = new TimePickerDialog(this, new TimePickerDialog.OnTimeSetListener() {
+            @Override
+            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                String updateTime = String.format("%02d", hourOfDay) + ":" + String.format("%02d", minute);
+                SQLiteDatabase sqLiteDatabase= openOrCreateDatabase("Setting",MODE_PRIVATE,null);
+                String sql = "UPDATE Setting SET state = "+"'"+updateTime+"'"+" WHERE function = "+"'alertTime'";
+                sqLiteDatabase.execSQL(sql);
+                sqLiteDatabase.close();
+
+            }
+        },Integer.parseInt(currentHour), Integer.parseInt(currentMin), false);
+        timePickerDialog.setTitle("Alert Time Setting");
+        timePickerDialog.show();
+        sqLiteDatabase.close();
+
     }
 
 }
