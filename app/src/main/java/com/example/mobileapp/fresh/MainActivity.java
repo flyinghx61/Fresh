@@ -33,6 +33,7 @@ import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TabHost;
 import android.widget.TabWidget;
@@ -370,12 +371,16 @@ public class MainActivity extends ActionBarActivity {
 
         // Add gridlayout
         int margin_top_grid=number*400+80;
+        ScrollView scrollView=new ScrollView(this);
         final GridLayout gridLayout=new GridLayout(this);
         gridLayout.setColumnCount(4);
         RelativeLayout.LayoutParams grid_param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,320);
         grid_param.setMargins(0,margin_top_grid,0,0);
         gridLayout.setLayoutParams(grid_param);
+        scrollView.setLayoutParams(grid_param);
+        relativeLayout1.addView(scrollView);
         relativeLayout1.addView(gridLayout);
+
         //   Add image on gridlayout
         for(int i=0;i<response.length();i++){
             JSONObject jsonObject=(JSONObject)response.get(i);
@@ -394,6 +399,7 @@ public class MainActivity extends ActionBarActivity {
                     case "frozen pizza": identifier = getResources().getIdentifier("frozen_pizza", "drawable", "com.example.mobileapp.fresh");break;
                     case "iced tea": identifier = getResources().getIdentifier("iced_tea", "drawable", "com.example.mobileapp.fresh");break;
                     case "cheese slice": identifier = getResources().getIdentifier("cheese_slice", "drawable", "com.example.mobileapp.fresh");break;
+                    case "mixed fruit": identifier = getResources().getIdentifier("mixed_fruit", "drawable", "com.example.mobileapp.fresh");break;
                     default: identifier = getResources().getIdentifier(foodname, "drawable", "com.example.mobileapp.fresh");
                 }
 
@@ -516,6 +522,7 @@ public class MainActivity extends ActionBarActivity {
                                            case "frozen pizza":  mBuilder.setSmallIcon(MainActivity.this.getResources().getIdentifier("frozen_pizza", "drawable", "com.example.mobileapp.fresh"));break;
                                            case "iced tea":  mBuilder.setSmallIcon(MainActivity.this.getResources().getIdentifier("iced_tea", "drawable", "com.example.mobileapp.fresh"));break;
                                            case "cheese slice":  mBuilder.setSmallIcon(MainActivity.this.getResources().getIdentifier("cheese_slice", "drawable", "com.example.mobileapp.fresh"));break;
+                                           case "mixed fruit":  mBuilder.setSmallIcon(MainActivity.this.getResources().getIdentifier("mixed_fruit", "drawable", "com.example.mobileapp.fresh"));break;
                                            default:  mBuilder.setSmallIcon(MainActivity.this.getResources().getIdentifier(foodname, "drawable", "com.example.mobileapp.fresh"));
                                        }
 

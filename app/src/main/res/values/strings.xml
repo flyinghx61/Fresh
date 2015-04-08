@@ -43,6 +43,19 @@
     <string name="hotdog">hotdog</string>
     <string name="ice_cream">ice cream</string>
     <string name="iced_tea">iced tea</string>
+    <string name="banana">banana</string>
+    <string name="blueberry">blueberry</string>
+    <string name="cherry">cherry</string>
+    <string name="grapes">grapes</string>
+    <string name="lemonlime">lemonlime</string>
+    <string name="melon">melon</string>
+    <string name="mixed_fruit">mixed fruit</string>
+    <string name="orange">orange</string>
+    <string name="peach">peach</string>
+    <string name="pineapple">pineapple</string>
+    <string name="plums">plums</string>
+    <string name="raspberry">raspberry</string>
+    <string name="strawberry">strawberry</string>
     <string-array name="filter_array">
         <item>Date added</item>
         <item>Expire date</item>

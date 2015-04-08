@@ -458,7 +458,7 @@
                                             android:layout_column="0"
                                             android:src="@drawable/pear"
                                             android:tag="@string/pear"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
 
@@ -470,7 +470,7 @@
                                             android:layout_column="1"
                                             android:src="@drawable/apple"
                                             android:tag="@string/apple"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog"
                                             android:adjustViewBounds="false" />
@@ -483,7 +483,175 @@
                                             android:layout_column="2"
                                             android:src="@drawable/kiwi"
                                             android:tag="@string/kiwi"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/banana"
+                                            android:layout_row="0"
+                                            android:layout_column="3"
+                                            android:src="@drawable/banana"
+                                            android:tag="@string/banana"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/blueberry"
+                                            android:layout_row="1"
+                                            android:layout_column="0"
+                                            android:src="@drawable/blueberry"
+                                            android:tag="@string/blueberry"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/cherry"
+                                            android:layout_row="1"
+                                            android:layout_column="1"
+                                            android:src="@drawable/cherry"
+                                            android:tag="@string/cherry"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/grapes"
+                                            android:layout_row="1"
+                                            android:layout_column="2"
+                                            android:layout_marginTop="5dp"
+                                            android:src="@drawable/grapes"
+                                            android:tag="@string/grapes"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/lemonlime"
+                                            android:layout_row="1"
+                                            android:layout_column="3"
+                                            android:src="@drawable/lemonlime"
+                                            android:tag="@string/lemonlime"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/melon"
+                                            android:layout_row="2"
+                                            android:layout_column="0"
+                                            android:src="@drawable/melon"
+                                            android:tag="@string/melon"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/mixed_fruit"
+                                            android:layout_row="2"
+                                            android:layout_column="1"
+                                            android:src="@drawable/mixed_fruit"
+                                            android:tag="@string/mixed_fruit"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/orange"
+                                            android:layout_row="2"
+                                            android:layout_column="2"
+                                            android:src="@drawable/orange"
+                                            android:tag="@string/orange"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                        android:layout_width="70dp"
+                                        android:layout_height="60dp"
+                                        android:id="@+id/peach"
+                                        android:layout_row="2"
+                                        android:layout_column="3"
+                                        android:src="@drawable/peach"
+                                        android:tag="@string/peach"
+                                        android:layout_marginTop="5dp"
+                                        android:layout_marginLeft="16dp"
+                                        android:layout_marginRight="0dp"
+                                        android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/pineapple"
+                                            android:layout_row="3"
+                                            android:layout_column="0"
+                                            android:src="@drawable/pineapple"
+                                            android:tag="@string/pineapple"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/plums"
+                                            android:layout_row="3"
+                                            android:layout_column="1"
+                                            android:src="@drawable/plums"
+                                            android:tag="@string/plums"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/raspberry"
+                                            android:layout_row="3"
+                                            android:layout_column="2"
+                                            android:src="@drawable/raspberry"
+                                            android:tag="@string/raspberry"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="16dp"
+                                            android:layout_marginRight="0dp"
+                                            android:onClick="show_dialog" />
+
+                                        <ImageButton
+                                            android:layout_width="70dp"
+                                            android:layout_height="60dp"
+                                            android:id="@+id/strawberry"
+                                            android:layout_row="3"
+                                            android:layout_column="3"
+                                            android:src="@drawable/strawberry"
+                                            android:tag="@string/strawberry"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
                                     </GridLayout>
@@ -504,7 +672,7 @@
                                             android:layout_column="0"
                                             android:src="@drawable/crab"
                                             android:tag="@string/crab"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
 
@@ -516,7 +684,7 @@
                                             android:layout_column="1"
                                             android:src="@drawable/ham"
                                             android:tag="@string/ham"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
 
@@ -528,7 +696,7 @@
                                             android:layout_column="2"
                                             android:src="@drawable/hotdog"
                                             android:tag="@string/hotdog"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
                                         </GridLayout>
@@ -549,7 +717,7 @@
                                             android:layout_column="0"
                                             android:src="@drawable/bread"
                                             android:tag="@string/bread"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
 
@@ -561,7 +729,7 @@
                                             android:layout_column="1"
                                             android:src="@drawable/cookies"
                                             android:tag="@string/cookies"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
 
@@ -573,7 +741,7 @@
                                             android:layout_column="2"
                                             android:src="@drawable/cupcake"
                                             android:tag="@string/cupcake"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
 
@@ -585,7 +753,7 @@
                                             android:layout_column="3"
                                             android:src="@drawable/cake"
                                             android:tag="@string/cake"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
                                         <ImageButton
@@ -596,7 +764,8 @@
                                             android:layout_column="0"
                                             android:src="@drawable/donuts"
                                             android:tag="@string/donuts"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
 
@@ -608,7 +777,8 @@
                                             android:layout_column="1"
                                             android:src="@drawable/frozen_pizza"
                                             android:tag="@string/frozen_pizza"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
                                     </GridLayout>
@@ -629,7 +799,7 @@
                                             android:layout_column="0"
                                             android:src="@drawable/milk"
                                             android:tag="@string/milk"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
 
@@ -641,7 +811,7 @@
                                             android:layout_column="1"
                                             android:src="@drawable/egg"
                                             android:tag="@string/egg"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
 
@@ -653,7 +823,7 @@
                                             android:layout_column="2"
                                             android:src="@drawable/butter"
                                             android:tag="@string/butter"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
 
@@ -665,7 +835,7 @@
                                             android:layout_column="3"
                                             android:src="@drawable/cheese_slice"
                                             android:tag="@string/cheese_slice"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
 
@@ -677,7 +847,8 @@
                                             android:layout_column="0"
                                             android:src="@drawable/cheese"
                                             android:tag="@string/cheese"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
 
@@ -689,7 +860,8 @@
                                             android:layout_column="1"
                                             android:src="@drawable/cream"
                                             android:tag="@string/cream"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
 
@@ -701,7 +873,8 @@
                                             android:layout_column="2"
                                             android:src="@drawable/ice_cream"
                                             android:tag="@string/ice_cream"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginTop="5dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
                                     </GridLayout>
@@ -722,7 +895,7 @@
                                             android:layout_column="0"
                                             android:src="@drawable/coffee"
                                             android:tag="@string/coffee"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
 
@@ -734,7 +907,7 @@
                                             android:layout_column="1"
                                             android:src="@drawable/iced_tea"
                                             android:tag="@string/iced_tea"
-                                            android:layout_marginLeft="20dp"
+                                            android:layout_marginLeft="16dp"
                                             android:layout_marginRight="0dp"
                                             android:onClick="show_dialog" />
                                     </GridLayout>

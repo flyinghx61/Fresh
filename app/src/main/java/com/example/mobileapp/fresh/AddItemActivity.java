@@ -499,6 +499,7 @@ public class AddItemActivity extends ActionBarActivity {
                     case "frozen pizza": identifier = getResources().getIdentifier("frozen_pizza", "drawable", "com.example.mobileapp.fresh");break;
                     case "iced tea": identifier = getResources().getIdentifier("iced_tea", "drawable", "com.example.mobileapp.fresh");break;
                     case "cheese slice": identifier = getResources().getIdentifier("cheese_slice", "drawable", "com.example.mobileapp.fresh");break;
+                    case "mixed fruit": identifier = getResources().getIdentifier("mixed_fruit", "drawable", "com.example.mobileapp.fresh");break;
                     default: identifier = getResources().getIdentifier(foodname, "drawable", "com.example.mobileapp.fresh");
                 }
 
