@@ -275,6 +275,8 @@ public class MainActivity extends ActionBarActivity {
                             FreezerDisplay(freezer_date, response);
                         } catch (JSONException e) {
                             e.printStackTrace();
+                        } catch (ParseException e) {
+                            e.printStackTrace();
                         }
                     }
                 }, new Response.ErrorListener() {
@@ -336,7 +338,7 @@ public class MainActivity extends ActionBarActivity {
         return freezer_date_array;
     }
 
-    public void FridgeDisplay(Object[] date, JSONArray response) throws JSONException {
+    public void FridgeDisplay(Object[] date, JSONArray response) throws JSONException, ParseException {
 
         for(int i=0;i<date.length;i++){
             String date1=String.valueOf(date[i]);
@@ -344,14 +346,14 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    public void FreezerDisplay(Object[] date, JSONArray response) throws JSONException {
+    public void FreezerDisplay(Object[] date, JSONArray response) throws JSONException, ParseException {
         for(int i=0;i<date.length;i++){
             String date1=(String)date[i];
             displayDateAndImage(date1, i,"freezer",response);
         }
     }
 
-    public void displayDateAndImage(String date, int number, String place,JSONArray response) throws JSONException {
+    public void displayDateAndImage(String date, int number, String place,JSONArray response) throws JSONException, ParseException {
         int margin_top=number*400;
         RelativeLayout relativeLayout=new RelativeLayout(this);
         RelativeLayout.LayoutParams param = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,80);
@@ -402,16 +404,53 @@ public class MainActivity extends ActionBarActivity {
                 final String id=jsonObject.getString("_id");
                 final String foodname=jsonObject.getString("foodname");
                 final String quality_period=jsonObject.getString("expire_period");
-                final String add_time=jsonObject.getString("add_time");
+                final String add_time=jsonObject.getString("add_time").substring(0, 10);
                 final ImageButton imageButton=new ImageButton(this);
+                String bestBefore=this.calculateDate(add_time, quality_period);
+                int daysLeft=calDateDifference(bestBefore,getTime());
                 int identifier=0;
-                switch(foodname){
-                    case "ice cream": identifier = getResources().getIdentifier("ice_cream", "drawable", "com.example.mobileapp.fresh");break;
-                    case "frozen pizza": identifier = getResources().getIdentifier("frozen_pizza", "drawable", "com.example.mobileapp.fresh");break;
-                    case "iced tea": identifier = getResources().getIdentifier("iced_tea", "drawable", "com.example.mobileapp.fresh");break;
-                    case "cheese slice": identifier = getResources().getIdentifier("cheese_slice", "drawable", "com.example.mobileapp.fresh");break;
-                    case "mixed fruit": identifier = getResources().getIdentifier("mixed_fruit", "drawable", "com.example.mobileapp.fresh");break;
-                    default: identifier = getResources().getIdentifier(foodname, "drawable", "com.example.mobileapp.fresh");
+                if(daysLeft >= 0) {
+                    switch (foodname) {
+                        case "ice cream":
+                            identifier = getResources().getIdentifier("ice_cream", "drawable", "com.example.mobileapp.fresh");
+                            break;
+                        case "frozen pizza":
+                            identifier = getResources().getIdentifier("frozen_pizza", "drawable", "com.example.mobileapp.fresh");
+                            break;
+                        case "iced tea":
+                            identifier = getResources().getIdentifier("iced_tea", "drawable", "com.example.mobileapp.fresh");
+                            break;
+                        case "cheese slice":
+                            identifier = getResources().getIdentifier("cheese_slice", "drawable", "com.example.mobileapp.fresh");
+                            break;
+                        case "mixed fruit":
+                            identifier = getResources().getIdentifier("mixed_fruit", "drawable", "com.example.mobileapp.fresh");
+                            break;
+                        default:
+                            identifier = getResources().getIdentifier(foodname, "drawable", "com.example.mobileapp.fresh");
+                    }
+                }
+
+                else {
+                    switch (foodname) {
+                        case "ice cream":
+                            identifier = getResources().getIdentifier("ice_cream_e", "drawable", "com.example.mobileapp.fresh");
+                            break;
+                        case "frozen pizza":
+                            identifier = getResources().getIdentifier("frozen_pizza_e", "drawable", "com.example.mobileapp.fresh");
+                            break;
+                        case "iced tea":
+                            identifier = getResources().getIdentifier("iced_tea_e", "drawable", "com.example.mobileapp.fresh");
+                            break;
+                        case "cheese slice":
+                            identifier = getResources().getIdentifier("cheese_slice_e", "drawable", "com.example.mobileapp.fresh");
+                            break;
+                        case "mixed fruit":
+                            identifier = getResources().getIdentifier("mixed_fruit_e", "drawable", "com.example.mobileapp.fresh");
+                            break;
+                        default:
+                            identifier = getResources().getIdentifier(foodname+"_e", "drawable", "com.example.mobileapp.fresh");
+                    }
                 }
 
                 imageButton.setImageResource(identifier);
